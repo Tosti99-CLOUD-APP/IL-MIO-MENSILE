@@ -1,0 +1,583 @@
+package com.tostiapp.a1
+
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.ActivityNotFoundException
+import android.content.ContentValues
+import android.content.Intent
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.tostiapp.a1.data.WorkEntry
+import com.tostiapp.a1.databinding.FragmentFirstBinding
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+
+class FirstFragment : Fragment() {
+
+    private var _binding: FragmentFirstBinding? = null
+    private val binding get() = _binding!!
+
+    private val workViewModel: WorkViewModel by viewModels()
+    private var selectedDate: Date = Date()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupMenu()
+        applyTheme() // Apply theme
+
+        val adapter = TaskListAdapter(
+            onDeleteClicked = { workEntry ->
+                workViewModel.delete(workEntry)
+            },
+            onEditClicked = { workEntry ->
+                val bundle = bundleOf("workEntryId" to workEntry.id)
+                findNavController().navigate(R.id.action_FirstFragment_to_EditTaskFragment, bundle)
+            }
+        )
+        binding.recyclerview.adapter = adapter
+        binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
+
+        // Setup Spinner
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.entry_types,
+            android.R.layout.simple_spinner_item
+        ).also { spinnerAdapter ->
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.entryTypeSpinner.adapter = spinnerAdapter
+        }
+
+        binding.dateInput.setOnClickListener {
+            showDatePickerDialog()
+        }
+        updateDateInput()
+
+        binding.entryTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                val isVacation = selectedItem == getString(R.string.entry_type_vacation)
+
+                binding.travelKms.isEnabled = !isVacation
+                binding.travelHours.isEnabled = !isVacation
+                binding.breakTime.isEnabled = !isVacation
+                binding.taskDescription.isEnabled = !isVacation
+                binding.company.isEnabled = !isVacation
+
+                if (isVacation) {
+                    binding.travelKms.setText("")
+                    binding.travelHours.setText("")
+                    binding.breakTime.setText("")
+                    binding.taskDescription.setText("")
+                    binding.company.setText("")
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Do nothing
+            }
+        }
+
+        workViewModel.allWorkEntries.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+
+        binding.startTime.setOnClickListener {
+            showTimePickerDialog(true)
+        }
+
+        binding.endTime.setOnClickListener {
+            showTimePickerDialog(false)
+        }
+
+        binding.saveButton.setOnClickListener {
+            val startTime = binding.startTime.text.toString()
+            val endTime = binding.endTime.text.toString()
+            val task = binding.taskDescription.text.toString()
+            val entryType = binding.entryTypeSpinner.selectedItem.toString()
+            val breakTime = binding.breakTime.text.toString().toIntOrNull()
+            val travelKms = binding.travelKms.text.toString().toDoubleOrNull()
+            val travelHours = binding.travelHours.text.toString().toDoubleOrNull()
+            val company = binding.company.text.toString()
+
+            if (startTime.isNotEmpty() && endTime.isNotEmpty()) {
+                workViewModel.insert(WorkEntry(date = selectedDate.time, startTime = startTime, endTime = endTime, breakTime = breakTime, task = task, entryType = entryType, travelKms = travelKms, travelHours = travelHours, company = company))
+                binding.startTime.setText("")
+                binding.endTime.setText("")
+                binding.breakTime.setText("")
+                binding.taskDescription.setText("")
+                binding.travelKms.setText("")
+                binding.travelHours.setText("")
+                binding.company.setText("")
+            } else {
+                Toast.makeText(requireContext(), getString(R.string.toast_start_end_time_required), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.importantMessage.setOnClickListener {
+            showFormatSelectionDialog()
+        }
+
+        checkDateAndShowMessage()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        applyTheme() // Re-apply theme on resume
+    }
+
+    private fun applyTheme() {
+        val sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Activity.MODE_PRIVATE)
+        val textColor = sharedPreferences.getInt("text_color", -1)
+        val textSize = sharedPreferences.getInt("text_size", 14)
+        ThemeManager.applyTheme(requireView(), textColor, textSize.toFloat())
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        calendar.time = selectedDate
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+            val newCalendar = Calendar.getInstance()
+            newCalendar.set(selectedYear, selectedMonth, selectedDay)
+            selectedDate = newCalendar.time
+            updateDateInput()
+        }, year, month, day).show()
+    }
+
+    private fun updateDateInput() {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        binding.dateInput.setText(sdf.format(selectedDate))
+    }
+
+    private fun showTimePickerDialog(isStartTime: Boolean) {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
+            val time = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute)
+            if (isStartTime) {
+                binding.startTime.setText(time)
+            } else {
+                binding.endTime.setText(time)
+            }
+        }, hour, minute, true).show()
+    }
+
+    private fun showFormatSelectionDialog(isPreview: Boolean = false) {
+        if (isPreview) {
+            showMonthSelectionDialog(getString(R.string.format_pdf), true)
+        } else {
+            val formats = arrayOf(getString(R.string.format_word), getString(R.string.format_excel), getString(R.string.format_pdf))
+            AlertDialog.Builder(requireContext())
+                .setTitle(getString(R.string.dialog_title_select_format))
+                .setItems(formats) { _, which ->
+                    val selectedFormat = formats[which]
+                    showMonthSelectionDialog(selectedFormat)
+                }
+                .show()
+        }
+    }
+
+    private fun showMonthSelectionDialog(format: String, isPreview: Boolean = false) {
+        val workEntries = workViewModel.allWorkEntries.value ?: return
+        val monthFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+        val months = workEntries.map { monthFormatter.format(it.date) }.distinct().toTypedArray()
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.dialog_title_select_month))
+            .setItems(months) { _, which ->
+                val selectedMonth = months[which]
+                when (format) {
+                    getString(R.string.format_word) -> generateAndShareTxt(selectedMonth)
+                    getString(R.string.format_excel) -> generateAndShareCsv(selectedMonth)
+                    getString(R.string.format_pdf) -> createPdf(selectedMonth, isPreview)
+                }
+            }
+            .show()
+    }
+
+    private fun generateAndShareTxt(month: String) {
+        val workEntries = workViewModel.allWorkEntries.value ?: return
+        val monthFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+        val entriesForMonth = workEntries.filter { monthFormatter.format(it.date) == month }
+
+        val fileName = "Riepilogo_${month.replace(" ", "_")}.txt"
+        val file = File(requireContext().cacheDir, fileName)
+
+        try {
+            file.printWriter().use { out ->
+                out.println(getString(R.string.pdf_summary_title) + " - " + month)
+                out.println("--------------------------------------------------")
+                entriesForMonth.forEach { entry ->
+                    val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                    try {
+                        val startTime = sdf.parse(entry.startTime)
+                        val endTime = sdf.parse(entry.endTime)
+
+                        if (startTime != null && endTime != null) {
+                            val breakTime = entry.breakTime ?: 0
+                            val diff = endTime.time - startTime.time - (breakTime * 60 * 1000)
+                            val hours = diff / (1000 * 60 * 60)
+                            val minutes = (diff / (1000 * 60)) % 60
+
+                            out.println("${getString(R.string.pdf_header_date)}: ${SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(entry.date)}")
+                            out.println("${getString(R.string.pdf_header_task)}: ${entry.task}")
+                            entry.company?.let { if(it.isNotEmpty()) out.println("${getString(R.string.text_company_label)}$it") }
+                            out.println("${getString(R.string.txt_label_type)}: ${entry.entryType}")
+                            out.println("${getString(R.string.txt_label_hours)}: $hours:$minutes")
+                            out.println("${getString(R.string.pdf_header_break)}: ${entry.breakTime} ${getString(R.string.txt_label_minutes)}")
+                            entry.travelKms?.let { out.println("${getString(R.string.pdf_header_travel_kms)}: $it") }
+                            entry.travelHours?.let { out.println("${getString(R.string.pdf_header_travel_hours)}: $it") }
+                            out.println("--------------------------------------------------")
+                        }
+                    } catch (e: ParseException) {
+                        Log.e("FirstFragment", "Error parsing time", e)
+                    }
+                }
+            }
+
+            val uri = FileProvider.getUriForFile(requireContext(), "${requireActivity().packageName}.provider", file)
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_STREAM, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_file)))
+        } catch (e: IOException) {
+            Log.e("FirstFragment", "Failed to generate file", e)
+            Toast.makeText(requireContext(), getString(R.string.toast_failed_to_generate_file), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun generateAndShareCsv(month: String) {
+        val workEntries = workViewModel.allWorkEntries.value ?: return
+        val monthFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+        val entriesForMonth = workEntries.filter { monthFormatter.format(it.date) == month }
+
+        val fileName = "Riepilogo_${month.replace(" ", "_")}.csv"
+        val file = File(requireContext().cacheDir, fileName)
+
+        try {
+            file.printWriter().use { out ->
+                out.println(getString(R.string.csv_header))
+                entriesForMonth.forEach { entry ->
+                    val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                    try {
+                        val startTime = sdf.parse(entry.startTime)
+                        val endTime = sdf.parse(entry.endTime)
+
+                        if (startTime != null && endTime != null) {
+                            val breakTime = entry.breakTime ?: 0
+                            val diff = endTime.time - startTime.time - (breakTime * 60 * 1000)
+                            val hours = diff / (1000 * 60 * 60)
+                            val minutes = (diff / (1000 * 60)) % 60
+                            val totalHours = "$hours:$minutes"
+                            val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(entry.date)
+
+                            out.println("\"$date\",\"${entry.task}\",\"${entry.company ?: ""}\",\"${entry.entryType}\",\"$totalHours\",\"${entry.breakTime ?: 0}\",\"${entry.travelKms ?: ""}\",\"${entry.travelHours ?: ""}\"")
+                        }
+                    } catch (e: ParseException) {
+                        Log.e("FirstFragment", "Error parsing time", e)
+                    }
+                }
+            }
+
+            val uri = FileProvider.getUriForFile(requireContext(), "${requireActivity().packageName}.provider", file)
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/csv"
+                putExtra(Intent.EXTRA_STREAM, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_file)))
+        } catch (e: IOException) {
+            Log.e("FirstFragment", "Failed to generate file", e)
+            Toast.makeText(requireContext(), getString(R.string.toast_failed_to_generate_file), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private fun createPdf(month: String, isPreview: Boolean = false) {
+        val workEntries = workViewModel.allWorkEntries.value ?: return
+        val monthFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+        val entriesForMonth = workEntries.filter { monthFormatter.format(it.date) == month }
+
+        val pdfDocument = PdfDocument()
+        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
+        val page = pdfDocument.startPage(pageInfo)
+        val canvas = page.canvas
+        val paint = Paint()
+
+        paint.textSize = 12f
+        var yPosition = 40f
+
+        canvas.drawText("${getString(R.string.pdf_summary_title)} - $month", 40f, yPosition, paint)
+        yPosition += 20f
+        canvas.drawLine(40f, yPosition, 555f, yPosition, paint)
+        yPosition += 20f
+
+        val headers = arrayOf(getString(R.string.pdf_header_date), getString(R.string.pdf_header_task), getString(R.string.pdf_header_work_hours), getString(R.string.pdf_header_break), getString(R.string.pdf_header_travel_kms), getString(R.string.pdf_header_travel_hours))
+        var xPosition = 40f
+        headers.forEach { header ->
+            canvas.drawText(header, xPosition, yPosition, paint)
+            xPosition += 100f
+        }
+        yPosition += 20f
+        canvas.drawLine(40f, yPosition, 555f, yPosition, paint)
+        yPosition += 20f
+
+        entriesForMonth.forEach { entry ->
+            val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+            try {
+                val startTime = sdf.parse(entry.startTime)
+                val endTime = sdf.parse(entry.endTime)
+
+                if (startTime != null && endTime != null) {
+                    val breakTime = entry.breakTime ?: 0
+                    val diff = endTime.time - startTime.time - (breakTime * 60 * 1000)
+                    val hours = diff / (1000 * 60 * 60)
+                    val minutes = (diff / (1000 * 60)) % 60
+
+                    val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(entry.date)
+                    val task = entry.task
+                    val totalHours = "$hours:$minutes"
+                    val breakMinutes = "${entry.breakTime ?: 0} ${getString(R.string.text_minutes_short)}"
+                    val travelKms = "${entry.travelKms ?: ""}"
+                    val travelHours = "${entry.travelHours ?: ""}"
+
+                    xPosition = 40f
+                    canvas.drawText(date, xPosition, yPosition, paint)
+                    xPosition += 100f
+                    canvas.drawText(task, xPosition, yPosition, paint)
+                    xPosition += 100f
+                    canvas.drawText(totalHours, xPosition, yPosition, paint)
+                    xPosition += 100f
+                    canvas.drawText(breakMinutes, xPosition, yPosition, paint)
+                    xPosition += 100f
+                    canvas.drawText(travelKms, xPosition, yPosition, paint)
+                    xPosition += 100f
+                    canvas.drawText(travelHours, xPosition, yPosition, paint)
+
+                    yPosition += 20f
+                }
+            } catch (e: ParseException) {
+                Log.e("FirstFragment", "Error parsing time", e)
+            }
+        }
+
+        pdfDocument.finishPage(page)
+
+        try {
+            val fileName = "Riepilogo_${month.replace(" ", "_")}.pdf"
+
+            if (isPreview) {
+                val file = File(requireContext().cacheDir, fileName)
+                file.outputStream().use { pdfDocument.writeTo(it) }
+                val uri = FileProvider.getUriForFile(requireContext(), "${requireActivity().packageName}.provider", file)
+                val viewIntent = Intent(Intent.ACTION_VIEW).apply {
+                    setDataAndType(uri, "application/pdf")
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                startActivity(viewIntent)
+            } else {
+                var fileOutputStream: OutputStream? = null
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    val resolver = requireContext().contentResolver
+                    val contentValues = ContentValues().apply {
+                        put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+                        put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf")
+                        put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+                    }
+                    val collection = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL)
+                    val uri = resolver.insert(collection, contentValues)
+                    if (uri != null) {
+                        fileOutputStream = resolver.openOutputStream(uri)
+                    }
+                } else {
+                    @Suppress("DEPRECATION")
+                    val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                    val file = File(downloadsDir, fileName)
+                    fileOutputStream = FileOutputStream(file)
+                }
+
+                fileOutputStream?.use {
+                    pdfDocument.writeTo(it)
+                    Toast.makeText(requireContext(), getString(R.string.toast_pdf_saved_to_downloads), Toast.LENGTH_SHORT).show()
+                }
+            }
+        } catch (e: IOException) {
+            Log.e("FirstFragment", "Failed to save PDF", e)
+            Toast.makeText(requireContext(), getString(R.string.toast_failed_to_save_pdf), Toast.LENGTH_SHORT).show()
+        } finally {
+            pdfDocument.close()
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private fun openPdfViewer() {
+        val pdfFiles = mutableListOf<Pair<Uri, String>>()
+        val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL)
+        } else {
+            MediaStore.Files.getContentUri("external")
+        }
+
+        val projection = arrayOf(
+            MediaStore.Files.FileColumns._ID,
+            MediaStore.Files.FileColumns.DISPLAY_NAME,
+        )
+        val selection = "${MediaStore.Files.FileColumns.MIME_TYPE} = ?"
+        val selectionArgs = arrayOf("application/pdf")
+
+        try {
+            requireContext().contentResolver.query(
+                collection,
+                projection,
+                selection,
+                selectionArgs,
+                "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
+            )?.use { cursor ->
+                val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
+                val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME)
+
+                while (cursor.moveToNext()) {
+                    val id = cursor.getLong(idColumn)
+                    val name = cursor.getString(nameColumn)
+                    val contentUri: Uri = Uri.withAppendedPath(
+                        collection,
+                        id.toString()
+                    )
+                    pdfFiles.add(Pair(contentUri, name))
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("FirstFragment", "Error querying MediaStore", e)
+            Toast.makeText(requireContext(), getString(R.string.toast_error_finding_pdfs), Toast.LENGTH_SHORT).show()
+            return
+        }
+
+
+        if (pdfFiles.isEmpty()) {
+            Toast.makeText(requireContext(), getString(R.string.no_saved_pdfs_found), Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val fileNames = pdfFiles.map { it.second }.toTypedArray()
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.select_pdf_to_open))
+            .setItems(fileNames) { _, which ->
+                val selectedFileUri = pdfFiles[which].first
+                val viewIntent = Intent(Intent.ACTION_VIEW).apply {
+                    setDataAndType(selectedFileUri, "application/pdf")
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                try {
+                    startActivity(viewIntent)
+                } catch (_: ActivityNotFoundException) {
+                    Toast.makeText(requireContext(), getString(R.string.toast_no_pdf_app), Toast.LENGTH_SHORT).show()
+                }
+            }
+            .show()
+    }
+
+    private fun setupMenu() {
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.main_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.action_create_pdf -> {
+                        showFormatSelectionDialog()
+                        true
+                    }
+                    R.id.action_view_pdf -> {
+                        openPdfViewer()
+                        true
+                    }
+                    R.id.action_view_all_tasks -> {
+                        findNavController().navigate(R.id.action_FirstFragment_to_TaskListFragment)
+                        true
+                    }
+                    R.id.action_settings -> {
+                        findNavController().navigate(R.id.action_FirstFragment_to_settingsFragment)
+                        true
+                    }
+                    R.id.action_info -> {
+                        findNavController().navigate(R.id.action_FirstFragment_to_infoFragment)
+                        true
+                    }
+                    R.id.menu_preview_pdf -> {
+                        showFormatSelectionDialog(isPreview = true)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun checkDateAndShowMessage() {
+        val calendar = Calendar.getInstance()
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        if (dayOfMonth >= 25) {
+            binding.importantMessage.visibility = View.VISIBLE
+        } else {
+            binding.importantMessage.visibility = View.GONE
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

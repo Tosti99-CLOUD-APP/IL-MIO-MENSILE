@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:columnCount="4"
+    android:padding="16dp">
+
+    <View android:id="@+id/color_1" android:tag="#FFFFFF" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="#FFFFFF" />
+    <View android:id="@+id/color_2" android:tag="#FF0000" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="#FF0000" />
+    <View android:id="@+id/color_3" android:tag="#00FF00" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="#00FF00" />
+    <View android:id="@+id/color_4" android:tag="#0000FF" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="#0000FF" />
+    <View android:id="@+id/color_5" android:tag="#FFFF00" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="#FFFF00" />
+    <View android:id="@+id/color_6" android:tag="#87CEEB" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="#87CEEB" />
+    <View android:id="@+id/color_7" android:tag="#FFC0CB" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="#FFC0CB" />
+    <View android:id="@+id/color_8" android:tag="#000000" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="#000000" />
+
+    <View android:id="@+id/gradient_1" android:tag="gradient_1" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_1" />
+    <View android:id="@+id/gradient_2" android:tag="gradient_2" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_2" />
+    <View android:id="@+id/gradient_3" android:tag="gradient_3" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_3" />
+    <View android:id="@+id/gradient_4" android:tag="gradient_4" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_4" />
+    <View android:id="@+id/gradient_5" android:tag="gradient_5" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_5" />
+    <View android:id="@+id/gradient_6" android:tag="gradient_6" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_6" />
+    <View android:id="@+id/gradient_7" android:tag="gradient_7" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_7" />
+    <View android:id="@+id/gradient_8" android:tag="gradient_8" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_8" />
+    <View android:id="@+id/gradient_9" android:tag="gradient_9" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_9" />
+    <View android:id="@+id/gradient_10" android:tag="gradient_10" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_10" />
+    <View android:id="@+id/gradient_11" android:tag="gradient_11" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_11" />
+    <View android:id="@+id/gradient_12" android:tag="gradient_12" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_12" />
+    <View android:id="@+id/gradient_13" android:tag="gradient_13" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_13" />
+    <View android:id="@+id/gradient_14" android:tag="gradient_14" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_14" />
+    <View android:id="@+id/gradient_15" android:tag="gradient_15" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_15" />
+    <View android:id="@+id/gradient_16" android:tag="gradient_16" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_16" />
+    <View android:id="@+id/gradient_17" android:tag="gradient_17" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_17" />
+    <View android:id="@+id/gradient_18" android:tag="gradient_18" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_18" />
+    <View android:id="@+id/gradient_19" android:tag="gradient_19" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_19" />
+    <View android:id="@+id/gradient_20" android:tag="gradient_20" android:layout_margin="8dp" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/gradient_20" />
+
+</GridLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mon Mensuel</string>
+
+    <string-array name="entry_types">
+        <item>@string/entry_type_work</item>
+        <item>@string/entry_type_leave</item>
+        <item>@string/entry_type_vacation</item>
+    </string-array>
+
+    <string name="entry_type_work">Travail</string>
+    <string name="entry_type_leave">Congé</string>
+    <string name="entry_type_vacation">Vacances</string>
+
+    <string name="label_daily_report">Rapport Journalier</string>
+    <string name="label_monthly_summary">Mon Mensuel</string>
+    <string name="label_settings">Paramètres</string>
+    <string name="label_edit_task">Modifier la Tâche</string>
+    <string name="label_all_tasks">Toutes les tâches</string>
+    <string name="label_info">Informations</string>
+
+    <string name="action_settings">Paramètres</string>
+    <string name="menu_create_pdf">Créer un PDF</string>
+    <string name="menu_view_pdf">Afficher les PDF enregistrés</string>
+    <string name="menu_preview_pdf">Aperçu mensuel</string>
+    <string name="menu_all_tasks">Toutes les tâches</string>
+    <string name="menu_info">Informations</string>
+    <string name="menu_settings">Paramètres</string>
+    <string name="menu_delete">Supprimer</string>
+
+    <string name="hint_start_time">Heure de début</string>
+    <string name="hint_end_time">Heure de fin</string>
+    <string name="hint_break_time">Pause (minutes)</string>
+    <string name="hint_travel_kms">Km de déplacement</string>
+    <string name="hint_travel_hours">H de voyage</string>
+    <string name="hint_task_description">Tâche effectuée</string>
+    <string name="hint_company">Entreprise</string>
+    <string name="button_save">Enregistrer</string>
+    <string name="text_send_monthly">ENVOYER MENSUELLEMENT</string>
+    <string name="toast_start_end_time_required">Veuillez saisir l\'heure de début et de fin</string>
+
+    <string name="button_save_changes">Enregistrer les modifications</string>
+
+    <string name="title_background">Arrière-plan</string>
+    <string name="button_change_background_color">Changer la couleur de l\'arrière-plan</string>
+    <string name="button_choose_from_gallery">Choisir depuis la galerie</string>
+    <string name="title_fonts">Polices</string>
+    <string name="button_change_text_color">Changer la couleur du texte</string>
+    <string name="title_text_size">Taille du texte</string>
+    <string name="language">Langue</string>
+
+    <string name="dialog_title_choose_color">Choisir une couleur</string>
+    <string name="dialog_button_cancel">Annuler</string>
+    <string name="dialog_title_new_background">Nouvel arrière-plan</string>
+    <string name="dialog_message_keep_background">Voulez-vous conserver cet arrière-plan ou restaurer celui par défaut?</string>
+
+    <string name="pdf_summary_title">Résumé des heures travaillées</string>
+    <string name="pdf_month_label">Mois: %s</string>
+    <string name="pdf_header_date">Date</string>
+    <string name="pdf_header_task">Tâche</string>
+    <string name="pdf_header_work_hours">Heures de travail</string>
+    <string name="pdf_header_leave_hours">Heures de congé</string>
+    <string name="pdf_header_vacation_hours">Heures de vacances</string>
+    <string name="pdf_header_break">Pause</string>
+    <string name="pdf_header_travel_kms">Km de déplacement</string>
+    <string name="pdf_header_travel_hours">H de voyage</string>
+    <string name="pdf_totals_label">Totaux</string>
+    <string name="pdf_no_data_message">Aucune donnée pour le mois sélectionné</string>
+    <string name="pdf_creation_success">PDF créé avec succès!</string>
+    <string name="pdf_creation_error">Erreur lors de la création du PDF</string>
+    <string name="pdf_preview_creation_error">Erreur lors de la création de l\'aperçu du PDF</string>
+    <string name="no_saved_pdfs_found">Aucun PDF enregistré trouvé.</string>
+    <string name="select_pdf_to_open">Sélectionnez un PDF à ouvrir</string>
+
+    <string name="txt_share_title">Partager le fichier TXT</string>
+    <string name="txt_creation_error">Erreur lors de la création du fichier TXT</string>
+    <string name="txt_label_type">Type</string>
+    <string name="txt_label_hours">Heures</string>
+    <string name="txt_label_minutes">minutes</string>
+
+    <string name="csv_header">Date,Tâche,Heures de travail,Heures de congé,Heures de vacances,Pause (min),Km de déplacement,H de voyage,Entreprise</string>
+    <string name="csv_share_title">Partager le fichier CSV</string>
+    <string name="csv_creation_error">Erreur lors de la création du fichier CSV</string>
+
+    <string name="info_version_label">Version de l\'application: %s</string>
+    <string name="share_file">Partager le fichier</string>
+</resources>

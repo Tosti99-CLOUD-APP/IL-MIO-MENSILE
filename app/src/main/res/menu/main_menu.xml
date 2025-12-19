@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_create_pdf"
+        android:title="@string/menu_create_pdf"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_preview_pdf"
+        android:title="@string/menu_preview_pdf"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_view_pdf"
+        android:title="@string/menu_view_pdf"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_view_all_tasks"
+        android:title="@string/menu_all_tasks"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/menu_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_info"
+        android:title="@string/menu_info"
+        app:showAsAction="never" />
+</menu>

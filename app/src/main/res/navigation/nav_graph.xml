@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FirstFragment">
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.tostiapp.a1.FirstFragment"
+        android:label="@string/label_daily_report"
+        tools:layout="@layout/fragment_first">
+
+        <action
+            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_EditTaskFragment"
+            app:destination="@id/EditTaskFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_TaskListFragment"
+            app:destination="@id/TaskListFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_infoFragment"
+            app:destination="@id/InfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SecondFragment"
+        android:name="com.tostiapp.a1.SecondFragment"
+        android:label="@string/label_monthly_summary"
+        tools:layout="@layout/fragment_second" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.tostiapp.a1.SettingsFragment"
+        android:label="@string/label_settings" />
+
+    <fragment
+        android:id="@+id/EditTaskFragment"
+        android:name="com.tostiapp.a1.EditTaskFragment"
+        android:label="@string/label_edit_task"
+        tools:layout="@layout/fragment_edit_task">
+        <argument
+            android:name="workEntryId"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/TaskListFragment"
+        android:name="com.tostiapp.a1.TaskListFragment"
+        android:label="@string/label_all_tasks"
+        tools:layout="@layout/fragment_task_list">
+        <action
+            android:id="@+id/action_TaskListFragment_to_EditTaskFragment"
+            app:destination="@id/EditTaskFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/InfoFragment"
+        android:name="com.tostiapp.a1.InfoFragment"
+        android:label="@string/label_info"
+        tools:layout="@layout/fragment_info" />
+</navigation>
