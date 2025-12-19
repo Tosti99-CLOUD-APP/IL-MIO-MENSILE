@@ -1,5 +1,6 @@
 package com.tostiapp.a1
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -7,6 +8,7 @@ import android.app.TimePickerDialog
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
@@ -24,7 +26,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
@@ -53,6 +57,20 @@ class FirstFragment : Fragment() {
 
     private val workViewModel: WorkViewModel by viewModels()
     private var selectedDate: Date = Date()
+
+    private var monthForPdf: String? = null
+    private var isPreviewForPdf: Boolean = false
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                monthForPdf?.let { createPdf(it, isPreviewForPdf) }
+            } else {
+                Toast.makeText(requireContext(), "Permission denied. Unable to save PDF.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -237,10 +255,36 @@ class FirstFragment : Fragment() {
                 when (format) {
                     getString(R.string.format_word) -> generateAndShareTxt(selectedMonth)
                     getString(R.string.format_excel) -> generateAndShareCsv(selectedMonth)
-                    getString(R.string.format_pdf) -> createPdf(selectedMonth, isPreview)
+                    getString(R.string.format_pdf) -> requestStoragePermissionAndCreatePdf(selectedMonth, isPreview)
                 }
             }
             .show()
+    }
+
+    private fun requestStoragePermissionAndCreatePdf(month: String, isPreview: Boolean) {
+        this.monthForPdf = month
+        this.isPreviewForPdf = isPreview
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            createPdf(month, isPreview)
+        } else {
+            when {
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    createPdf(month, isPreview)
+                }
+                shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) -> {
+                    // Explain to the user why you need the permission
+                    Toast.makeText(requireContext(), "Storage permission is required to save PDF files.", Toast.LENGTH_LONG).show()
+                    requestPermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                }
+                else -> {
+                    requestPermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                }
+            }
+        }
     }
 
     private fun generateAndShareTxt(month: String) {
@@ -415,6 +459,7 @@ class FirstFragment : Fragment() {
 
         try {
             val fileName = "Riepilogo_${month.replace(" ", "_")}.pdf"
+            val folderName = "Riepilogo Ore"
 
             if (isPreview) {
                 val file = File(requireContext().cacheDir, fileName)
@@ -433,7 +478,7 @@ class FirstFragment : Fragment() {
                     val contentValues = ContentValues().apply {
                         put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
                         put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf")
-                        put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+                        put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + folderName)
                     }
                     val collection = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL)
                     val uri = resolver.insert(collection, contentValues)
@@ -443,13 +488,17 @@ class FirstFragment : Fragment() {
                 } else {
                     @Suppress("DEPRECATION")
                     val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                    val file = File(downloadsDir, fileName)
+                    val appDir = File(downloadsDir, folderName)
+                    if (!appDir.exists()) {
+                        appDir.mkdirs()
+                    }
+                    val file = File(appDir, fileName)
                     fileOutputStream = FileOutputStream(file)
                 }
 
                 fileOutputStream?.use {
                     pdfDocument.writeTo(it)
-                    Toast.makeText(requireContext(), getString(R.string.toast_pdf_saved_to_downloads), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "PDF salvato in Download/Riepilogo Ore", Toast.LENGTH_LONG).show()
                 }
             }
         } catch (e: IOException) {
@@ -460,69 +509,90 @@ class FirstFragment : Fragment() {
         }
     }
 
-    @SuppressLint("NewApi")
-    private fun openPdfViewer() {
-        val pdfFiles = mutableListOf<Pair<Uri, String>>()
-        val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL)
+    private fun openSavedFilesViewer() {
+        val savedFiles = mutableListOf<Pair<Uri, String>>()
+        val folderName = "Riepilogo Ore"
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val collection = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL)
+            val projection = arrayOf(
+                MediaStore.Files.FileColumns._ID,
+                MediaStore.Files.FileColumns.DISPLAY_NAME,
+            )
+            val selection = "(${MediaStore.Files.FileColumns.MIME_TYPE} = ? OR ${MediaStore.Files.FileColumns.MIME_TYPE} = ? OR ${MediaStore.Files.FileColumns.MIME_TYPE} = ?) AND ${MediaStore.Files.FileColumns.RELATIVE_PATH} LIKE ?"
+            val selectionArgs = arrayOf("application/pdf", "text/plain", "text/csv", "%$folderName%")
+
+            try {
+                requireContext().contentResolver.query(
+                    collection,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
+                )?.use { cursor ->
+                    val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
+                    val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME)
+
+                    while (cursor.moveToNext()) {
+                        val id = cursor.getLong(idColumn)
+                        val name = cursor.getString(nameColumn)
+                        val contentUri: Uri = Uri.withAppendedPath(
+                            collection,
+                            id.toString()
+                        )
+                        savedFiles.add(Pair(contentUri, name))
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("FirstFragment", "Error querying MediaStore", e)
+                Toast.makeText(requireContext(), "Error finding saved files.", Toast.LENGTH_SHORT).show()
+                return
+            }
         } else {
-            MediaStore.Files.getContentUri("external")
-        }
+            @Suppress("DEPRECATION")
+            val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val appDir = File(downloadsDir, folderName)
 
-        val projection = arrayOf(
-            MediaStore.Files.FileColumns._ID,
-            MediaStore.Files.FileColumns.DISPLAY_NAME,
-        )
-        val selection = "${MediaStore.Files.FileColumns.MIME_TYPE} = ?"
-        val selectionArgs = arrayOf("application/pdf")
-
-        try {
-            requireContext().contentResolver.query(
-                collection,
-                projection,
-                selection,
-                selectionArgs,
-                "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
-            )?.use { cursor ->
-                val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
-                val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME)
-
-                while (cursor.moveToNext()) {
-                    val id = cursor.getLong(idColumn)
-                    val name = cursor.getString(nameColumn)
-                    val contentUri: Uri = Uri.withAppendedPath(
-                        collection,
-                        id.toString()
-                    )
-                    pdfFiles.add(Pair(contentUri, name))
+            if (appDir.exists() && appDir.isDirectory) {
+                appDir.listFiles { _, name ->
+                    val lowerCaseName = name.lowercase(Locale.getDefault())
+                    lowerCaseName.endsWith(".pdf") || lowerCaseName.endsWith(".txt") || lowerCaseName.endsWith(".csv")
+                }?.forEach { file ->
+                    val fileUri = FileProvider.getUriForFile(requireContext(), "${requireActivity().packageName}.provider", file)
+                    savedFiles.add(Pair(fileUri, file.name))
                 }
             }
-        } catch (e: Exception) {
-            Log.e("FirstFragment", "Error querying MediaStore", e)
-            Toast.makeText(requireContext(), getString(R.string.toast_error_finding_pdfs), Toast.LENGTH_SHORT).show()
+        }
+
+        if (savedFiles.isEmpty()) {
+            Toast.makeText(requireContext(), "No saved files found.", Toast.LENGTH_SHORT).show()
             return
         }
 
+        savedFiles.sortByDescending { it.second }
 
-        if (pdfFiles.isEmpty()) {
-            Toast.makeText(requireContext(), getString(R.string.no_saved_pdfs_found), Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val fileNames = pdfFiles.map { it.second }.toTypedArray()
+        val fileNames = savedFiles.map { it.second }.toTypedArray()
 
         AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.select_pdf_to_open))
+            .setTitle("Select file to open")
             .setItems(fileNames) { _, which ->
-                val selectedFileUri = pdfFiles[which].first
+                val selectedFileUri = savedFiles[which].first
+                val selectedFileName = savedFiles[which].second
+
                 val viewIntent = Intent(Intent.ACTION_VIEW).apply {
-                    setDataAndType(selectedFileUri, "application/pdf")
+                    val mimeType = when {
+                        selectedFileName.lowercase(Locale.getDefault()).endsWith(".pdf") -> "application/pdf"
+                        selectedFileName.lowercase(Locale.getDefault()).endsWith(".csv") -> "text/csv"
+                        selectedFileName.lowercase(Locale.getDefault()).endsWith(".txt") -> "text/plain"
+                        else -> "*/*"
+                    }
+                    setDataAndType(selectedFileUri, mimeType)
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
                 try {
                     startActivity(viewIntent)
                 } catch (_: ActivityNotFoundException) {
-                    Toast.makeText(requireContext(), getString(R.string.toast_no_pdf_app), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "No application found to open this file.", Toast.LENGTH_SHORT).show()
                 }
             }
             .show()
@@ -541,7 +611,7 @@ class FirstFragment : Fragment() {
                         true
                     }
                     R.id.action_view_pdf -> {
-                        openPdfViewer()
+                        openSavedFilesViewer()
                         true
                     }
                     R.id.action_view_all_tasks -> {

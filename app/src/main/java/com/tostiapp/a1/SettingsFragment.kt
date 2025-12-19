@@ -5,17 +5,14 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.graphics.toColorInt
-import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.tostiapp.a1.databinding.FragmentSettingsBinding
@@ -93,12 +90,6 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun setLocale(languageCode: String) {
-        val appLocale = LocaleListCompat.forLanguageTags(languageCode)
-        AppCompatDelegate.setApplicationLocales(appLocale)
-        requireActivity().recreate()
-    }
-
     private fun showColorPaletteDialog(isBackground: Boolean) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_color_palette, null)
         val dialog = AlertDialog.Builder(requireContext())
@@ -174,7 +165,7 @@ class SettingsFragment : Fragment() {
 
     private fun showLanguageSelectionDialog() {
         val languages = resources.getStringArray(R.array.languages)
-        val currentLanguage = sharedPreferences.getString("language", "it") ?: "it"
+        val currentLanguage = LocaleHelper.getLanguage(requireContext())
 
         AlertDialog.Builder(requireContext())
             .setTitle("Seleziona Lingua")
@@ -186,43 +177,22 @@ class SettingsFragment : Fragment() {
                     else -> "it"
                 }
                 if (currentLanguage != selectedLang) {
-                    showLanguageConfirmationDialog(selectedLang, currentLanguage)
+                    showLanguageChangeConfirmationDialog(selectedLang)
                 }
             }
             .show()
     }
 
-    private fun showLanguageConfirmationDialog(selectedLang: String, previousLang: String) {
-        val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("Conferma lingua")
-            .setMessage("Mantieni la nuova lingua o ripristina? Ripristino automatico in 3 secondi.")
-            .setPositiveButton("Mantieni") { d, _ ->
-                sharedPreferences.edit { putString("language", selectedLang) }
-                setLocale(selectedLang)
-                d.dismiss()
+    private fun showLanguageChangeConfirmationDialog(selectedLang: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Cambia lingua")
+            .setMessage("L'applicazione verrà riavviata per applicare la nuova lingua. Continuare?")
+            .setPositiveButton("OK") { _, _ ->
+                LocaleHelper.setLocale(requireContext(), selectedLang)
+                requireActivity().recreate()
             }
-            .setNegativeButton("Ripristina") { d, _ ->
-                setLocale(previousLang)
-                d.dismiss()
-            }
-            .setCancelable(false)
-            .create()
-
-        dialog.show()
-
-        val timer = object: CountDownTimer(3000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                dialog.setMessage("Mantieni la nuova lingua o ripristina? Ripristino automatico in ${millisUntilFinished / 1000} secondi.")
-            }
-
-            override fun onFinish() {
-                if (dialog.isShowing) {
-                    setLocale(previousLang)
-                    dialog.dismiss()
-                }
-            }
-        }
-        timer.start()
+            .setNegativeButton("Annulla", null)
+            .show()
     }
 
     override fun onDestroyView() {
