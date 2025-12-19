@@ -57,6 +57,7 @@ class FirstFragment : Fragment() {
 
     private val workViewModel: WorkViewModel by viewModels()
     private var selectedDate: Date = Date()
+    private val monthFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
 
     private var monthForPdf: String? = null
     private var isPreviewForPdf: Boolean = false
@@ -245,7 +246,6 @@ class FirstFragment : Fragment() {
 
     private fun showMonthSelectionDialog(format: String, isPreview: Boolean = false) {
         val workEntries = workViewModel.allWorkEntries.value ?: return
-        val monthFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
         val months = workEntries.map { monthFormatter.format(it.date) }.distinct().toTypedArray()
 
         AlertDialog.Builder(requireContext())
@@ -289,7 +289,6 @@ class FirstFragment : Fragment() {
 
     private fun generateAndShareTxt(month: String) {
         val workEntries = workViewModel.allWorkEntries.value ?: return
-        val monthFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
         val entriesForMonth = workEntries.filter { monthFormatter.format(it.date) == month }
 
         val fileName = "Riepilogo_${month.replace(" ", "_")}.txt"
@@ -342,15 +341,27 @@ class FirstFragment : Fragment() {
 
     private fun generateAndShareCsv(month: String) {
         val workEntries = workViewModel.allWorkEntries.value ?: return
-        val monthFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
         val entriesForMonth = workEntries.filter { monthFormatter.format(it.date) == month }
 
         val fileName = "Riepilogo_${month.replace(" ", "_")}.csv"
         val file = File(requireContext().cacheDir, fileName)
 
+        var totalWorkHours = 0.0
+        var totalLeaveHours = 0.0
+        var totalVacationHours = 0.0
+        var totalTravelKms = 0.0
+        var totalTravelHours = 0.0
+
         try {
             file.printWriter().use { out ->
-                out.println(getString(R.string.csv_header))
+                // Header
+                out.println(getString(R.string.pdf_summary_title))
+                out.println("${getString(R.string.pdf_month_label, month)}\n")
+
+                // Column Titles
+                out.println("${getString(R.string.pdf_header_date)};${getString(R.string.pdf_header_task)};${getString(R.string.hint_company)};${getString(R.string.pdf_header_work_hours)};${getString(R.string.pdf_header_leave_hours)};${getString(R.string.pdf_header_vacation_hours)};${getString(R.string.pdf_header_break)};${getString(R.string.pdf_header_travel_kms)};${getString(R.string.pdf_header_travel_hours)}")
+
+                // Data Rows
                 entriesForMonth.forEach { entry ->
                     val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
                     try {
@@ -359,18 +370,57 @@ class FirstFragment : Fragment() {
 
                         if (startTime != null && endTime != null) {
                             val breakTime = entry.breakTime ?: 0
-                            val diff = endTime.time - startTime.time - (breakTime * 60 * 1000)
-                            val hours = diff / (1000 * 60 * 60)
-                            val minutes = (diff / (1000 * 60)) % 60
-                            val totalHours = "$hours:$minutes"
+                            
+                            val endCalendar = Calendar.getInstance()
+                            endCalendar.time = endTime
+                            if (endTime.before(startTime)) {
+                                endCalendar.add(Calendar.DAY_OF_YEAR, 1)
+                            }
+
+                            val diff = endCalendar.timeInMillis - startTime.time - (breakTime * 60 * 1000)
+                            val positiveDiff = if (diff < 0) 0 else diff
+                            val hours = positiveDiff / (1000 * 60 * 60)
+                            val minutes = (positiveDiff / (1000 * 60)) % 60
+                            val totalHours = hours + minutes / 60.0
+
+                            var workHours = 0.0
+                            var leaveHours = 0.0
+                            var vacationHours = 0.0
+
+                            when (entry.entryType) {
+                                getString(R.string.entry_type_work) -> workHours = totalHours
+                                getString(R.string.entry_type_leave) -> leaveHours = totalHours
+                                getString(R.string.entry_type_vacation) -> vacationHours = totalHours
+                            }
+
+                            totalWorkHours += workHours
+                            totalLeaveHours += leaveHours
+                            totalVacationHours += vacationHours
+                            totalTravelKms += entry.travelKms ?: 0.0
+                            totalTravelHours += entry.travelHours ?: 0.0
+
                             val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(entry.date)
 
-                            out.println("\"$date\",\"${entry.task}\",\"${entry.company ?: ""}\",\"${entry.entryType}\",\"$totalHours\",\"${entry.breakTime ?: 0}\",\"${entry.travelKms ?: ""}\",\"${entry.travelHours ?: ""}\"")
+                            val workHoursStr = if (workHours > 0) String.format(Locale.getDefault(), "%.2f", workHours) else ""
+                            val leaveHoursStr = if (leaveHours > 0) String.format(Locale.getDefault(), "%.2f", leaveHours) else ""
+                            val vacationHoursStr = if (vacationHours > 0) String.format(Locale.getDefault(), "%.2f", vacationHours) else ""
+                            val travelKmsStr = if ((entry.travelKms ?: 0.0) > 0) String.format(Locale.getDefault(), "%.2f", entry.travelKms) else ""
+                            val travelHoursStr = if ((entry.travelHours ?: 0.0) > 0) String.format(Locale.getDefault(), "%.2f", entry.travelHours) else ""
+
+                            out.println("$date;${entry.task};${entry.company ?: ""};$workHoursStr;$leaveHoursStr;$vacationHoursStr;$breakTime;$travelKmsStr;$travelHoursStr")
                         }
                     } catch (e: ParseException) {
                         Log.e("FirstFragment", "Error parsing time", e)
                     }
                 }
+
+                // Totals Row
+                val totalWorkHoursStr = String.format(Locale.getDefault(), "%.2f", totalWorkHours)
+                val totalLeaveHoursStr = String.format(Locale.getDefault(), "%.2f", totalLeaveHours)
+                val totalVacationHoursStr = String.format(Locale.getDefault(), "%.2f", totalVacationHours)
+                val totalTravelKmsStr = String.format(Locale.getDefault(), "%.2f", totalTravelKms)
+                val totalTravelHoursStr = String.format(Locale.getDefault(), "%.2f", totalTravelHours)
+                out.println("\n${getString(R.string.pdf_totals_label)};;;${totalWorkHoursStr};${totalLeaveHoursStr};${totalVacationHoursStr};;${totalTravelKmsStr};${totalTravelHoursStr}")
             }
 
             val uri = FileProvider.getUriForFile(requireContext(), "${requireActivity().packageName}.provider", file)
@@ -389,7 +439,6 @@ class FirstFragment : Fragment() {
     @SuppressLint("NewApi")
     private fun createPdf(month: String, isPreview: Boolean = false) {
         val workEntries = workViewModel.allWorkEntries.value ?: return
-        val monthFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
         val entriesForMonth = workEntries.filter { monthFormatter.format(it.date) == month }
 
         val pdfDocument = PdfDocument()
@@ -398,23 +447,48 @@ class FirstFragment : Fragment() {
         val canvas = page.canvas
         val paint = Paint()
 
+        var totalWorkHours = 0.0
+        var totalLeaveHours = 0.0
+        var totalVacationHours = 0.0
+        var totalTravelKms = 0.0
+        var totalTravelHours = 0.0
+
+        // Draw title
+        paint.textSize = 16f
+        paint.isFakeBoldText = true
+        canvas.drawText(getString(R.string.pdf_summary_title), 40f, 40f, paint)
+        paint.isFakeBoldText = false
         paint.textSize = 12f
-        var yPosition = 40f
+        canvas.drawText(getString(R.string.pdf_month_label, month), 40f, 60f, paint)
 
-        canvas.drawText("${getString(R.string.pdf_summary_title)} - $month", 40f, yPosition, paint)
-        yPosition += 20f
-        canvas.drawLine(40f, yPosition, 555f, yPosition, paint)
-        yPosition += 20f
+        // Table Headers
+        var yPosition = 90f
+        paint.textSize = 8f
+        paint.isFakeBoldText = true
 
-        val headers = arrayOf(getString(R.string.pdf_header_date), getString(R.string.pdf_header_task), getString(R.string.pdf_header_work_hours), getString(R.string.pdf_header_break), getString(R.string.pdf_header_travel_kms), getString(R.string.pdf_header_travel_hours))
+        val headers = listOf(
+            Pair(getString(R.string.pdf_header_date), 65f),
+            Pair(getString(R.string.pdf_header_task), 100f),
+            Pair(getString(R.string.hint_company), 70f),
+            Pair(getString(R.string.pdf_header_work_hours), 50f),
+            Pair(getString(R.string.pdf_header_leave_hours), 50f),
+            Pair(getString(R.string.pdf_header_vacation_hours), 50f),
+            Pair(getString(R.string.pdf_header_break), 40f),
+            Pair(getString(R.string.pdf_header_travel_kms), 50f),
+            Pair(getString(R.string.pdf_header_travel_hours), 50f)
+        )
+
         var xPosition = 40f
-        headers.forEach { header ->
-            canvas.drawText(header, xPosition, yPosition, paint)
-            xPosition += 100f
+        headers.forEach {
+            canvas.drawText(it.first, xPosition, yPosition, paint)
+            xPosition += it.second
         }
-        yPosition += 20f
+        yPosition += 10f
         canvas.drawLine(40f, yPosition, 555f, yPosition, paint)
-        yPosition += 20f
+        yPosition += 15f
+
+        // Table Rows
+        paint.isFakeBoldText = false
 
         entriesForMonth.forEach { entry ->
             val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -424,35 +498,87 @@ class FirstFragment : Fragment() {
 
                 if (startTime != null && endTime != null) {
                     val breakTime = entry.breakTime ?: 0
-                    val diff = endTime.time - startTime.time - (breakTime * 60 * 1000)
-                    val hours = diff / (1000 * 60 * 60)
-                    val minutes = (diff / (1000 * 60)) % 60
+                    
+                    val endCalendar = Calendar.getInstance()
+                    endCalendar.time = endTime
+                    if (endTime.before(startTime)) {
+                        endCalendar.add(Calendar.DAY_OF_YEAR, 1)
+                    }
+
+                    val diff = endCalendar.timeInMillis - startTime.time - (breakTime * 60 * 1000)
+                    val positiveDiff = if (diff < 0) 0 else diff
+                    val hours = positiveDiff / (1000 * 60 * 60)
+                    val minutes = (positiveDiff / (1000 * 60)) % 60
+                    val totalHours = hours + minutes / 60.0
+
+                    var workHours = 0.0
+                    var leaveHours = 0.0
+                    var vacationHours = 0.0
+
+                    when (entry.entryType) {
+                        getString(R.string.entry_type_work) -> workHours = totalHours
+                        getString(R.string.entry_type_leave) -> leaveHours = totalHours
+                        getString(R.string.entry_type_vacation) -> vacationHours = totalHours
+                    }
+
+                    totalWorkHours += workHours
+                    totalLeaveHours += leaveHours
+                    totalVacationHours += vacationHours
+                    totalTravelKms += entry.travelKms ?: 0.0
+                    totalTravelHours += entry.travelHours ?: 0.0
 
                     val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(entry.date)
-                    val task = entry.task
-                    val totalHours = "$hours:$minutes"
-                    val breakMinutes = "${entry.breakTime ?: 0} ${getString(R.string.text_minutes_short)}"
-                    val travelKms = "${entry.travelKms ?: ""}"
-                    val travelHours = "${entry.travelHours ?: ""}"
+
+                    val rowData = listOf(
+                        Pair(date, 65f),
+                        Pair(entry.task, 100f),
+                        Pair(entry.company ?: "", 70f),
+                        Pair(if (workHours > 0) String.format(Locale.getDefault(), "%.2f", workHours) else "", 50f),
+                        Pair(if (leaveHours > 0) String.format(Locale.getDefault(), "%.2f", leaveHours) else "", 50f),
+                        Pair(if (vacationHours > 0) String.format(Locale.getDefault(), "%.2f", vacationHours) else "", 50f),
+                        Pair(breakTime.toString(), 40f),
+                        Pair(if ((entry.travelKms ?: 0.0) > 0) String.format(Locale.getDefault(), "%.2f", entry.travelKms) else "", 50f),
+                        Pair(if ((entry.travelHours ?: 0.0) > 0) String.format(Locale.getDefault(), "%.2f", entry.travelHours) else "", 50f)
+                    )
 
                     xPosition = 40f
-                    canvas.drawText(date, xPosition, yPosition, paint)
-                    xPosition += 100f
-                    canvas.drawText(task, xPosition, yPosition, paint)
-                    xPosition += 100f
-                    canvas.drawText(totalHours, xPosition, yPosition, paint)
-                    xPosition += 100f
-                    canvas.drawText(breakMinutes, xPosition, yPosition, paint)
-                    xPosition += 100f
-                    canvas.drawText(travelKms, xPosition, yPosition, paint)
-                    xPosition += 100f
-                    canvas.drawText(travelHours, xPosition, yPosition, paint)
-
-                    yPosition += 20f
+                    rowData.forEach {
+                        canvas.drawText(it.first, xPosition, yPosition, paint)
+                        xPosition += it.second
+                    }
+                    yPosition += 15f
                 }
             } catch (e: ParseException) {
                 Log.e("FirstFragment", "Error parsing time", e)
             }
+        }
+        
+        // Totals Row
+        yPosition += 10f
+        canvas.drawLine(40f, yPosition, 555f, yPosition, paint)
+        yPosition += 15f
+        paint.isFakeBoldText = true
+
+        val totalWorkHoursStr = String.format(Locale.getDefault(), "%.2f", totalWorkHours)
+        val totalLeaveHoursStr = String.format(Locale.getDefault(), "%.2f", totalLeaveHours)
+        val totalVacationHoursStr = String.format(Locale.getDefault(), "%.2f", totalVacationHours)
+        val totalTravelKmsStr = String.format(Locale.getDefault(), "%.2f", totalTravelKms)
+        val totalTravelHoursStr = String.format(Locale.getDefault(), "%.2f", totalTravelHours)
+
+        val totalsData = listOf(
+            Pair(getString(R.string.pdf_totals_label), 65f + 100f + 70f),
+            Pair(totalWorkHoursStr, 50f),
+            Pair(totalLeaveHoursStr, 50f),
+            Pair(totalVacationHoursStr, 50f),
+            Pair("", 40f), // Skip break total
+            Pair(totalTravelKmsStr, 50f),
+            Pair(totalTravelHoursStr, 50f)
+        )
+
+        xPosition = 40f
+        totalsData.forEach {
+            canvas.drawText(it.first, xPosition, yPosition, paint)
+            xPosition += it.second
         }
 
         pdfDocument.finishPage(page)
