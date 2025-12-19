@@ -3,6 +3,11 @@
     <string name="app_name">My Monthly</string>
 
     <!-- Entry Types -->
+    <string-array name="entry_types">
+        <item>@string/entry_type_work</item>
+        <item>@string/entry_type_leave</item>
+        <item>@string/entry_type_vacation</item>
+    </string-array>
     <string name="entry_type_work">Work</string>
     <string name="entry_type_leave">Leave</string>
     <string name="entry_type_vacation">Vacation</string>
@@ -71,8 +76,8 @@
     <string name="pdf_creation_success">PDF created successfully!</string>
     <string name="pdf_creation_error">Error creating PDF</string>
     <string name="pdf_preview_creation_error">Error creating PDF preview</string>
-    <string name="no_saved_pdfs_found">No saved PDFs found.</string>
-    <string name="select_pdf_to_open">Select a PDF to open</string>
+    <string name="no_saved_pdfs_found">No saved files found.</string>
+    <string name="select_pdf_to_open">Select a file to open</string>
 
     <!-- TXT Generation -->
     <string name="txt_share_title">Share TXT file</string>
@@ -82,11 +87,31 @@
     <string name="txt_label_minutes">minutes</string>
 
     <!-- CSV Generation -->
-    <string name="csv_header">Date,Task,Work Hours,Leave Hours,Vacation Hours,Break (min),Travel Kms,Travel Hours,Company</string>
     <string name="csv_share_title">Share CSV file</string>
     <string name="csv_creation_error">Error creating CSV file</string>
 
     <!-- Info Fragment -->
     <string name="info_version_label">App version: %s</string>
     <string name="share_file">Share file</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_failed_to_generate_file">Failed to generate file.</string>
+    <string name="toast_pdf_saved_to_downloads">PDF saved to Downloads</string>
+    <string name="toast_failed_to_save_pdf">Failed to save PDF.</string>
+    <string name="toast_no_pdf_app">No application found to open this file.</string>
+
+    <!-- Dialog Titles -->
+    <string name="dialog_title_select_format">Select format</string>
+    <string name="dialog_title_select_month">Select a month</string>
+
+    <!-- Format Strings -->
+    <string name="format_word">Word (.txt)</string>
+    <string name="format_excel">Excel (.csv)</string>
+    <string name="format_pdf">PDF</string>
+
+    <!-- Text Labels -->
+    <string name="text_company_label">Company: </string>
+    <string name="text_minutes_short">min</string>
+    <string name="toast_error_finding_pdfs">Error finding PDF files</string>
+
 </resources>

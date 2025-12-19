@@ -12,8 +12,8 @@ android {
         applicationId = "com.tostiapp.a1"
         minSdk = 26
         targetSdk = 36
-        versionCode = 8
-        versionName = "0.7.8"
+        versionCode = 9
+        versionName = "0.8.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -38,11 +38,11 @@ android {
         viewBinding = true
         buildConfig = true
     }
+}
 
-    kapt {
-        arguments {
-            arg("room.schemaLocation", "$projectDir/schemas")
-        }
+kapt {
+    arguments {
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 }
 
@@ -55,12 +55,14 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    //noinspection KaptUsageInsteadOfKsp
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.glide)
+    //noinspection KaptUsageInsteadOfKsp
     kapt(libs.glide.compiler)
     implementation(libs.androidx.documentfile)
     implementation(libs.androidx.core.splashscreen)

@@ -75,18 +75,17 @@
     <string name="pdf_creation_success">PDF creato con successo!</string>
     <string name="pdf_creation_error">Errore durante la creazione del PDF</string>
     <string name="pdf_preview_creation_error">Errore durante la creazione dell\'anteprima del PDF</string>
-    <string name="no_saved_pdfs_found">Nessun PDF salvato trovato.</string>
-    <string name="select_pdf_to_open">Seleziona un PDF da aprire</string>
+    <string name="no_saved_pdfs_found">Nessun file salvato trovato.</string>
+    <string name="select_pdf_to_open">Seleziona un file da aprire</string>
 
     <!-- TXT Generation -->
     <string name="txt_share_title">Condividi il file TXT</string>
-    <string name="txt_creation_error">Errore during la creazione del file TXT</string>
+    <string name="txt_creation_error">Errore durante la creazione del file TXT</string>
     <string name="txt_label_type">Tipo</string>
     <string name="txt_label_hours">Ore</string>
     <string name="txt_label_minutes">minuti</string>
 
     <!-- CSV Generation -->
-    <string name="csv_header">Data,Mansione,Azienda,Tipo,Ore,Pausa (minuti),Km Trasferta,H Viaggio</string>
     <string name="csv_share_title">Condividi il file CSV</string>
     <string name="csv_creation_error">Errore durante la creazione del file CSV</string>
 
@@ -95,10 +94,10 @@
     <string name="share_file">Condividi file</string>
 
     <!-- Toast Messages -->
-    <string name="toast_failed_to_generate_file">Failed to generate file.</string>
-    <string name="toast_pdf_saved_to_downloads">PDF saved to Downloads</string>
-    <string name="toast_failed_to_save_pdf">Failed to save PDF.</string>
-    <string name="toast_no_pdf_app">No application can open this PDF</string>
+    <string name="toast_failed_to_generate_file">Errore durante la generazione del file.</string>
+    <string name="toast_pdf_saved_to_downloads">PDF salvato in Download</string>
+    <string name="toast_failed_to_save_pdf">Errore nel salvataggio del PDF.</string>
+    <string name="toast_no_pdf_app">Nessuna applicazione trovata per aprire questo file.</string>
 
     <!-- Dialog Titles -->
     <string name="dialog_title_select_format">Seleziona il formato</string>
@@ -112,6 +111,6 @@
     <!-- Text Labels -->
     <string name="text_company_label">Azienda: </string>
     <string name="text_minutes_short">min</string>
-    <string name="toast_error_finding_pdfs">Error finding PDF files</string>
+    <string name="toast_error_finding_pdfs">Errore nel trovare i file PDF</string>
 
 </resources>

@@ -69,8 +69,8 @@
     <string name="pdf_creation_success">PDF créé avec succès!</string>
     <string name="pdf_creation_error">Erreur lors de la création du PDF</string>
     <string name="pdf_preview_creation_error">Erreur lors de la création de l\'aperçu du PDF</string>
-    <string name="no_saved_pdfs_found">Aucun PDF enregistré trouvé.</string>
-    <string name="select_pdf_to_open">Sélectionnez un PDF à ouvrir</string>
+    <string name="no_saved_pdfs_found">Aucun fichier enregistré trouvé.</string>
+    <string name="select_pdf_to_open">Sélectionnez un fichier à ouvrir</string>
 
     <string name="txt_share_title">Partager le fichier TXT</string>
     <string name="txt_creation_error">Erreur lors de la création du fichier TXT</string>
@@ -78,10 +78,26 @@
     <string name="txt_label_hours">Heures</string>
     <string name="txt_label_minutes">minutes</string>
 
-    <string name="csv_header">Date,Tâche,Heures de travail,Heures de congé,Heures de vacances,Pause (min),Km de déplacement,H de voyage,Entreprise</string>
     <string name="csv_share_title">Partager le fichier CSV</string>
     <string name="csv_creation_error">Erreur lors de la création du fichier CSV</string>
 
     <string name="info_version_label">Version de l\'application: %s</string>
     <string name="share_file">Partager le fichier</string>
+
+    <string name="toast_failed_to_generate_file">Erreur lors de la génération du fichier.</string>
+    <string name="toast_pdf_saved_to_downloads">PDF enregistré dans Téléchargements</string>
+    <string name="toast_failed_to_save_pdf">Erreur lors de l\'enregistrement du PDF.</string>
+    <string name="toast_no_pdf_app">Aucune application trouvée pour ouvrir ce fichier.</string>
+
+    <string name="dialog_title_select_format">Sélectionnez le format</string>
+    <string name="dialog_title_select_month">Sélectionnez un mois</string>
+
+    <string name="format_word">Word (.txt)</string>
+    <string name="format_excel">Excel (.csv)</string>
+    <string name="format_pdf">PDF</string>
+
+    <string name="text_company_label">Entreprise: </string>
+    <string name="text_minutes_short">min</string>
+    <string name="toast_error_finding_pdfs">Erreur lors de la recherche de fichiers PDF</string>
+
 </resources>

@@ -3,6 +3,11 @@
     <string name="app_name">Mein Monat</string>
 
     <!-- Entry Types -->
+    <string-array name="entry_types">
+        <item>@string/entry_type_work</item>
+        <item>@string/entry_type_leave</item>
+        <item>@string/entry_type_vacation</item>
+    </string-array>
     <string name="entry_type_work">Arbeit</string>
     <string name="entry_type_leave">Urlaub</string>
     <string name="entry_type_vacation">Ferien</string>
@@ -71,8 +76,8 @@
     <string name="pdf_creation_success">PDF erfolgreich erstellt!</string>
     <string name="pdf_creation_error">Fehler beim Erstellen der PDF-Datei</string>
     <string name="pdf_preview_creation_error">Fehler beim Erstellen der PDF-Vorschau</string>
-    <string name="no_saved_pdfs_found">Keine gespeicherten PDFs gefunden.</string>
-    <string name="select_pdf_to_open">Wählen Sie ein PDF zum Öffnen</string>
+    <string name="no_saved_pdfs_found">Keine gespeicherten Dateien gefunden.</string>
+    <string name="select_pdf_to_open">Wählen Sie eine Datei zum Öffnen</string>
 
     <!-- TXT Generation -->
     <string name="txt_share_title">TXT-Datei teilen</string>
@@ -82,11 +87,31 @@
     <string name="txt_label_minutes">Minuten</string>
 
     <!-- CSV Generation -->
-    <string name="csv_header">Datum,Aufgabe,Arbeitsstunden,Urlaubsstunden,Ferienstunden,Pause (min),Reisekilometer,Reisestunden,Firma</string>
     <string name="csv_share_title">CSV-Datei teilen</string>
     <string name="csv_creation_error">Fehler beim Erstellen der CSV-Datei</string>
 
     <!-- Info Fragment -->
     <string name="info_version_label">App-Version: %s</string>
     <string name="share_file">Datei teilen</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_failed_to_generate_file">Fehler beim Generieren der Datei.</string>
+    <string name="toast_pdf_saved_to_downloads">PDF in Downloads gespeichert</string>
+    <string name="toast_failed_to_save_pdf">Fehler beim Speichern der PDF-Datei.</string>
+    <string name="toast_no_pdf_app">Keine Anwendung zum Öffnen dieser Datei gefunden.</string>
+
+    <!-- Dialog Titles -->
+    <string name="dialog_title_select_format">Format auswählen</string>
+    <string name="dialog_title_select_month">Monat auswählen</string>
+
+    <!-- Format Strings -->
+    <string name="format_word">Word (.txt)</string>
+    <string name="format_excel">Excel (.csv)</string>
+    <string name="format_pdf">PDF</string>
+
+    <!-- Text Labels -->
+    <string name="text_company_label">Firma: </string>
+    <string name="text_minutes_short">min</string>
+    <string name="toast_error_finding_pdfs">Fehler beim Finden von PDF-Dateien</string>
+
 </resources>

@@ -58,6 +58,8 @@ class FirstFragment : Fragment() {
     private val workViewModel: WorkViewModel by viewModels()
     private var selectedDate: Date = Date()
     private val monthFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+    private val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+    private val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
     private var monthForPdf: String? = null
     private var isPreviewForPdf: Boolean = false
@@ -210,8 +212,7 @@ class FirstFragment : Fragment() {
     }
 
     private fun updateDateInput() {
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        binding.dateInput.setText(sdf.format(selectedDate))
+        binding.dateInput.setText(dateFormatter.format(selectedDate))
     }
 
     private fun showTimePickerDialog(isStartTime: Boolean) {
@@ -291,6 +292,11 @@ class FirstFragment : Fragment() {
         val workEntries = workViewModel.allWorkEntries.value ?: return
         val entriesForMonth = workEntries.filter { monthFormatter.format(it.date) == month }
 
+        if (entriesForMonth.isEmpty()) {
+            Toast.makeText(requireContext(), getString(R.string.pdf_no_data_message), Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val fileName = "Riepilogo_${month.replace(" ", "_")}.txt"
         val file = File(requireContext().cacheDir, fileName)
 
@@ -299,10 +305,9 @@ class FirstFragment : Fragment() {
                 out.println(getString(R.string.pdf_summary_title) + " - " + month)
                 out.println("--------------------------------------------------")
                 entriesForMonth.forEach { entry ->
-                    val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
                     try {
-                        val startTime = sdf.parse(entry.startTime)
-                        val endTime = sdf.parse(entry.endTime)
+                        val startTime = timeFormatter.parse(entry.startTime)
+                        val endTime = timeFormatter.parse(entry.endTime)
 
                         if (startTime != null && endTime != null) {
                             val breakTime = entry.breakTime ?: 0
@@ -310,7 +315,7 @@ class FirstFragment : Fragment() {
                             val hours = diff / (1000 * 60 * 60)
                             val minutes = (diff / (1000 * 60)) % 60
 
-                            out.println("${getString(R.string.pdf_header_date)}: ${SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(entry.date)}")
+                            out.println("${getString(R.string.pdf_header_date)}: ${dateFormatter.format(entry.date)}")
                             out.println("${getString(R.string.pdf_header_task)}: ${entry.task}")
                             entry.company?.let { if(it.isNotEmpty()) out.println("${getString(R.string.text_company_label)}$it") }
                             out.println("${getString(R.string.txt_label_type)}: ${entry.entryType}")
@@ -343,6 +348,11 @@ class FirstFragment : Fragment() {
         val workEntries = workViewModel.allWorkEntries.value ?: return
         val entriesForMonth = workEntries.filter { monthFormatter.format(it.date) == month }
 
+        if (entriesForMonth.isEmpty()) {
+            Toast.makeText(requireContext(), getString(R.string.pdf_no_data_message), Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val fileName = "Riepilogo_${month.replace(" ", "_")}.csv"
         val file = File(requireContext().cacheDir, fileName)
 
@@ -363,10 +373,9 @@ class FirstFragment : Fragment() {
 
                 // Data Rows
                 entriesForMonth.forEach { entry ->
-                    val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
                     try {
-                        val startTime = sdf.parse(entry.startTime)
-                        val endTime = sdf.parse(entry.endTime)
+                        val startTime = timeFormatter.parse(entry.startTime)
+                        val endTime = timeFormatter.parse(entry.endTime)
 
                         if (startTime != null && endTime != null) {
                             val breakTime = entry.breakTime ?: 0
@@ -399,7 +408,7 @@ class FirstFragment : Fragment() {
                             totalTravelKms += entry.travelKms ?: 0.0
                             totalTravelHours += entry.travelHours ?: 0.0
 
-                            val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(entry.date)
+                            val date = dateFormatter.format(entry.date)
 
                             val workHoursStr = if (workHours > 0) String.format(Locale.getDefault(), "%.2f", workHours) else ""
                             val leaveHoursStr = if (leaveHours > 0) String.format(Locale.getDefault(), "%.2f", leaveHours) else ""
@@ -440,6 +449,11 @@ class FirstFragment : Fragment() {
     private fun createPdf(month: String, isPreview: Boolean = false) {
         val workEntries = workViewModel.allWorkEntries.value ?: return
         val entriesForMonth = workEntries.filter { monthFormatter.format(it.date) == month }
+
+        if (entriesForMonth.isEmpty()) {
+            Toast.makeText(requireContext(), getString(R.string.pdf_no_data_message), Toast.LENGTH_SHORT).show()
+            return
+        }
 
         val pdfDocument = PdfDocument()
         val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
@@ -491,10 +505,9 @@ class FirstFragment : Fragment() {
         paint.isFakeBoldText = false
 
         entriesForMonth.forEach { entry ->
-            val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
             try {
-                val startTime = sdf.parse(entry.startTime)
-                val endTime = sdf.parse(entry.endTime)
+                val startTime = timeFormatter.parse(entry.startTime)
+                val endTime = timeFormatter.parse(entry.endTime)
 
                 if (startTime != null && endTime != null) {
                     val breakTime = entry.breakTime ?: 0
@@ -527,7 +540,7 @@ class FirstFragment : Fragment() {
                     totalTravelKms += entry.travelKms ?: 0.0
                     totalTravelHours += entry.travelHours ?: 0.0
 
-                    val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(entry.date)
+                    val date = dateFormatter.format(entry.date)
 
                     val rowData = listOf(
                         Pair(date, 65f),
