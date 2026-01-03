@@ -7,13 +7,13 @@ import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 
-class LanguageManager(private val context: Context) {
+class LanguageManager(context: Context) {
 
     private val splitInstallManager: SplitInstallManager = SplitInstallManagerFactory.create(context)
 
     fun downloadLanguage(languageCode: String, onDownloaded: () -> Unit) {
         val request = SplitInstallRequest.newBuilder()
-            .addLanguage(java.util.Locale(languageCode))
+            .addLanguage(java.util.Locale.forLanguageTag(languageCode))
             .build()
 
         val listener = object : SplitInstallStateUpdatedListener {

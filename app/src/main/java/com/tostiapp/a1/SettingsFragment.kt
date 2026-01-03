@@ -16,6 +16,7 @@ import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.tostiapp.a1.databinding.FragmentSettingsBinding
+import com.tostiapp.a1.util.LanguageManager
 
 class SettingsFragment : Fragment() {
 
@@ -24,6 +25,7 @@ class SettingsFragment : Fragment() {
 
     private lateinit var sharedPreferences: SharedPreferences
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private lateinit var languageManager: LanguageManager
 
     private val selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
@@ -48,6 +50,7 @@ class SettingsFragment : Fragment() {
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Activity.MODE_PRIVATE)
+        languageManager = LanguageManager(requireContext())
         return binding.root
     }
 
@@ -186,10 +189,12 @@ class SettingsFragment : Fragment() {
     private fun showLanguageChangeConfirmationDialog(selectedLang: String) {
         AlertDialog.Builder(requireContext())
             .setTitle("Cambia lingua")
-            .setMessage("L'applicazione verrà riavviata per applicare la nuova lingua. Continuare?")
+            .setMessage("L'applicazione scaricherà la lingua selezionata e verrà riavviata. Continuare?")
             .setPositiveButton("OK") { _, _ ->
-                LocaleHelper.setLocale(requireContext(), selectedLang)
-                requireActivity().recreate()
+                languageManager.downloadLanguage(selectedLang) {
+                    LocaleHelper.setLocale(requireContext(), selectedLang)
+                    requireActivity().recreate()
+                }
             }
             .setNegativeButton("Annulla", null)
             .show()
