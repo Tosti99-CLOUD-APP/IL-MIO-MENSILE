@@ -18,6 +18,7 @@ documentfile = "1.1.0"
 splashscreen = "1.2.0"
 ksp = "2.0.21-1.0.12"
 playCoreKtx = "2.1.0"
+playFeatureDelivery = "2.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,6 +42,8 @@ glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", versi
 androidx-documentfile = { group = "androidx.documentfile", name = "documentfile", version.ref = "documentfile" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 play-core-ktx = { group = "com.google.android.play", name = "app-update-ktx", version.ref = "playCoreKtx" }
+play-feature-delivery = { group = "com.google.android.play", name = "feature-delivery", version.ref = "playFeatureDelivery" }
+play-feature-delivery-ktx = { group = "com.google.android.play", name = "feature-delivery-ktx", version.ref = "playFeatureDelivery" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

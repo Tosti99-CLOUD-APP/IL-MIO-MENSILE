@@ -16,7 +16,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -25,7 +24,6 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.tostiapp.a1.databinding.ActivityMainBinding
-import com.tostiapp.a1.util.BatteryOptimizationUtil
 
 class MainActivity : BaseActivity() {
 
@@ -57,10 +55,6 @@ class MainActivity : BaseActivity() {
 
         sharedViewModel.backgroundChanged.observe(this) {
             applyCustomBackground()
-        }
-
-        if (!BatteryOptimizationUtil.isBatteryOptimizationIgnored(this)) {
-            showBatteryOptimizationDialog()
         }
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
@@ -117,17 +111,6 @@ class MainActivity : BaseActivity() {
             setAction("RIAVVIA") { appUpdateManager.completeUpdate() }
             show()
         }
-    }
-
-    private fun showBatteryOptimizationDialog() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Ottimizzazione Batteria")
-            .setMessage("Per garantire il corretto funzionamento dell'app in background, è necessario disabilitare l'ottimizzazione della batteria.")
-            .setPositiveButton("Vai alle Impostazioni") { _, _ ->
-                BatteryOptimizationUtil.requestIgnoreBatteryOptimizations(this)
-            }
-            .setNegativeButton("Annulla", null)
-            .show()
     }
 
     fun applyCustomBackground() {

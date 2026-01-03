@@ -67,6 +67,8 @@ dependencies {
     implementation(libs.androidx.documentfile)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.play.core.ktx)
+    implementation(libs.play.feature.delivery)
+    implementation(libs.play.feature.delivery.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
