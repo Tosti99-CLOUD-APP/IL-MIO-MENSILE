@@ -1,0 +1,16 @@
+<resources>
+    <!-- Traduzioni parziali per il turco -->
+
+    <!-- Fragment Labels -->
+    <string name="label_settings">Ayarlar</string>
+
+    <!-- SettingsFragment Layout -->
+    <string name="title_background">Arka plan</string>
+    <string name="button_change_background_color">Arka plan rengini değiştir</string>
+    <string name="button_choose_from_gallery">Galeriden seç</string>
+    <string name="title_fonts">Yazı tipleri</string>
+    <string name="button_change_text_color">Metin rengini değiştir</string>
+    <string name="title_text_size">Metin boyutu</string>
+    <string name="language">Dil</string>
+
+</resources>

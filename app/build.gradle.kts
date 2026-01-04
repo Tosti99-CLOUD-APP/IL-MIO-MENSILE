@@ -16,6 +16,7 @@ android {
         versionName = "0.8.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        resConfigs("it", "en", "fr", "de", "es", "pt", "ru", "zh", "ja", "ar", "hi", "ko", "nl", "pl", "sv", "tr")
     }
 
     buildTypes {
@@ -37,6 +38,11 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+    }
+    bundle {
+        language {
+            enableSplit = true
+        }
     }
 }
 

@@ -1,0 +1,16 @@
+<resources>
+    <!-- Traduzioni parziali per l'olandese -->
+
+    <!-- Fragment Labels -->
+    <string name="label_settings">Instellingen</string>
+
+    <!-- SettingsFragment Layout -->
+    <string name="title_background">Achtergrond</string>
+    <string name="button_change_background_color">Achtergrondkleur wijzigen</string>
+    <string name="button_choose_from_gallery">Kies uit galerij</string>
+    <string name="title_fonts">Lettertypen</string>
+    <string name="button_change_text_color">Tekstkleur wijzigen</string>
+    <string name="title_text_size">Tekstgrootte</string>
+    <string name="language">Taal</string>
+
+</resources>

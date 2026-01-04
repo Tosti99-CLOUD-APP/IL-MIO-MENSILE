@@ -1,8 +1,43 @@
 <resources>
-    <string-array name="languages">
+    <string-array name="language_names">
+        <!-- Main languages -->
         <item>Italiano</item>
         <item>English</item>
         <item>Français</item>
         <item>Deutsch</item>
+        <!-- Extended languages -->
+        <item>Español</item>
+        <item>Português</item>
+        <item>Русский</item>
+        <item>中文 (简体)</item>
+        <item>日本語</item>
+        <item>العربية</item>
+        <item>हिन्दी</item>
+        <item>한국어</item>
+        <item>Nederlands</item>
+        <item>Polski</item>
+        <item>Svenska</item>
+        <item>Türkçe</item>
+    </string-array>
+
+    <string-array name="language_codes">
+        <!-- Main languages -->
+        <item>it</item>
+        <item>en</item>
+        <item>fr</item>
+        <item>de</item>
+        <!-- Extended languages -->
+        <item>es</item>
+        <item>pt</item>
+        <item>ru</item>
+        <item>zh</item>
+        <item>ja</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>ko</item>
+        <item>nl</item>
+        <item>pl</item>
+        <item>sv</item>
+        <item>tr</item>
     </string-array>
 </resources>

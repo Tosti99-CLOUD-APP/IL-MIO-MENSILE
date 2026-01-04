@@ -1,0 +1,16 @@
+<resources>
+    <!-- Traduzioni parziali per il coreano -->
+
+    <!-- Fragment Labels -->
+    <string name="label_settings">설정</string>
+
+    <!-- SettingsFragment Layout -->
+    <string name="title_background">배경</string>
+    <string name="button_change_background_color">배경색 변경</string>
+    <string name="button_choose_from_gallery">갤러리에서 선택</string>
+    <string name="title_fonts">글꼴</string>
+    <string name="button_change_text_color">텍스트 색상 변경</string>
+    <string name="title_text_size">텍스트 크기</string>
+    <string name="language">언어</string>
+
+</resources>

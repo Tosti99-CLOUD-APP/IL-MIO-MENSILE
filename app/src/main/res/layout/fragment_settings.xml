@@ -65,15 +65,25 @@
         android:progress="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_size_title" />
+        app:layout_constraintTop_toBottomOf="@+id/text_size_title" />
 
-    <Button
-        android:id="@+id/change_language_button"
+    <TextView
+        android:id="@+id/language_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/language"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_size_seekbar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/languages_recyclerview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/language_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

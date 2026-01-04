@@ -1,0 +1,16 @@
+<resources>
+    <!-- Traduzioni parziali per il polacco -->
+
+    <!-- Fragment Labels -->
+    <string name="label_settings">Ustawienia</string>
+
+    <!-- SettingsFragment Layout -->
+    <string name="title_background">Tło</string>
+    <string name="button_change_background_color">Zmień kolor tła</string>
+    <string name="button_choose_from_gallery">Wybierz z galerii</string>
+    <string name="title_fonts">Czcionki</string>
+    <string name="button_change_text_color">Zmień kolor tekstu</string>
+    <string name="title_text_size">Rozmiar tekstu</string>
+    <string name="language">Język</string>
+
+</resources>

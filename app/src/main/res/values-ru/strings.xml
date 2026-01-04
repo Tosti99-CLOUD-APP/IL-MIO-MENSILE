@@ -1,0 +1,16 @@
+<resources>
+    <!-- Traduzioni parziali per il russo -->
+
+    <!-- Fragment Labels -->
+    <string name="label_settings">Настройки</string>
+
+    <!-- SettingsFragment Layout -->
+    <string name="title_background">Фон</string>
+    <string name="button_change_background_color">Изменить цвет фона</string>
+    <string name="button_choose_from_gallery">Выбрать из галереи</string>
+    <string name="title_fonts">Шрифты</string>
+    <string name="button_change_text_color">Изменить цвет текста</string>
+    <string name="title_text_size">Размер текста</string>
+    <string name="language">Язык</string>
+
+</resources>

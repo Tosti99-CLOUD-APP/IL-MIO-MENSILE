@@ -1,0 +1,16 @@
+<resources>
+    <!-- Traduzioni parziali per il giapponese -->
+
+    <!-- Fragment Labels -->
+    <string name="label_settings">設定</string>
+
+    <!-- SettingsFragment Layout -->
+    <string name="title_background">背景</string>
+    <string name="button_change_background_color">背景色を変更</string>
+    <string name="button_choose_from_gallery">ギャラリーから選択</string>
+    <string name="title_fonts">フォント</string>
+    <string name="button_change_text_color">テキストの色を変更</string>
+    <string name="title_text_size">テキストサイズ</string>
+    <string name="language">言語</string>
+
+</resources>

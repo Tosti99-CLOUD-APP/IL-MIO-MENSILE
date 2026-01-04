@@ -9,13 +9,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
+import com.tostiapp.a1.adapter.LanguageAdapter
 import com.tostiapp.a1.databinding.FragmentSettingsBinding
+import com.tostiapp.a1.model.LanguageItem
 import com.tostiapp.a1.util.LanguageManager
 
 class SettingsFragment : Fragment() {
@@ -26,6 +31,8 @@ class SettingsFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var languageManager: LanguageManager
+    private lateinit var languageAdapter: LanguageAdapter
+    private val languageList = mutableListOf<LanguageItem>()
 
     private val selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
@@ -58,7 +65,11 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         applyTheme()
+        setupButtons()
+        setupLanguageList()
+    }
 
+    private fun setupButtons() {
         binding.changeBackgroundColorButton.setOnClickListener {
             showColorPaletteDialog(true)
         }
@@ -87,10 +98,88 @@ class SettingsFragment : Fragment() {
                 }
             }
         })
+    }
 
-        binding.changeLanguageButton.setOnClickListener {
-            showLanguageSelectionDialog()
+    private fun setupLanguageList() {
+        val splitInstallManager = SplitInstallManagerFactory.create(requireContext())
+        val installedLanguages = splitInstallManager.installedLanguages.toSet()
+        val currentLocale = LocaleHelper.getLanguage(requireContext())
+
+        val languageNames = resources.getStringArray(R.array.language_names)
+        val languageCodes = resources.getStringArray(R.array.language_codes)
+
+        languageList.clear()
+        languageList.addAll(
+            languageNames.zip(languageCodes).map { (name, code) ->
+                LanguageItem(name, code, installedLanguages.contains(code) || currentLocale == code)
+            }
+        )
+
+        languageAdapter = LanguageAdapter(languageList) { languageItem ->
+            handleLanguageClick(languageItem)
         }
+
+        binding.languagesRecyclerview.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = languageAdapter
+        }
+    }
+
+    private fun handleLanguageClick(languageItem: LanguageItem) {
+        val currentLanguage = LocaleHelper.getLanguage(requireContext())
+
+        when {
+            languageItem.code == currentLanguage -> {
+                // Language is already active, do nothing.
+                Toast.makeText(requireContext(), "Lingua già attiva", Toast.LENGTH_SHORT).show()
+            }
+            languageItem.isDownloaded -> {
+                // Language is downloaded but not active, prompt for restart.
+                showLanguageChangeConfirmationDialog(languageItem.code)
+            }
+            !languageItem.isDownloading -> {
+                // Language is not downloaded, start download.
+                downloadLanguage(languageItem)
+            }
+        }
+    }
+
+    private fun downloadLanguage(languageItem: LanguageItem) {
+        val itemIndex = languageList.indexOf(languageItem)
+        if (itemIndex == -1) return
+
+        languageList[itemIndex].isDownloading = true
+        languageAdapter.notifyItemChanged(itemIndex)
+
+        languageManager.downloadLanguage(languageItem.code) {
+            // On Success
+            activity?.runOnUiThread {
+                languageList[itemIndex].isDownloading = false
+                languageList[itemIndex].isDownloaded = true
+                languageAdapter.notifyItemChanged(itemIndex)
+
+                // Automatically ask to switch to the new language
+                showLanguageChangeConfirmationDialog(languageItem.code)
+            }
+        }
+    }
+
+    private fun showLanguageChangeConfirmationDialog(langCode: String) {
+        val message = if (LocaleHelper.getLanguage(requireContext()) == langCode) {
+            "La lingua è già impostata. Riavviare per applicare?"
+        } else {
+            "La lingua è pronta. Vuoi riavviare l'app per applicare le modifiche?"
+        }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Cambia Lingua")
+            .setMessage(message)
+            .setPositiveButton("Riavvia") { _, _ ->
+                LocaleHelper.setLocale(requireContext(), langCode)
+                requireActivity().recreate()
+            }
+            .setNegativeButton("Più tardi", null)
+            .show()
     }
 
     private fun showColorPaletteDialog(isBackground: Boolean) {
@@ -140,7 +229,7 @@ class SettingsFragment : Fragment() {
         dialog.show()
     }
 
-    fun applyTheme() {
+    private fun applyTheme() {
         val textColor = sharedPreferences.getInt("text_color", -1)
         val textSize = sharedPreferences.getInt("text_size", 14)
         view?.let { ThemeManager.applyTheme(it, textColor, textSize.toFloat()) }
@@ -163,40 +252,6 @@ class SettingsFragment : Fragment() {
                 dialog.dismiss()
             }
             .setCancelable(false)
-            .show()
-    }
-
-    private fun showLanguageSelectionDialog() {
-        val languages = resources.getStringArray(R.array.languages)
-        val currentLanguage = LocaleHelper.getLanguage(requireContext())
-
-        AlertDialog.Builder(requireContext())
-            .setTitle("Seleziona Lingua")
-            .setItems(languages) { _, which ->
-                val selectedLang = when (languages[which]) {
-                    "English" -> "en"
-                    "Français" -> "fr"
-                    "Deutsch" -> "de"
-                    else -> "it"
-                }
-                if (currentLanguage != selectedLang) {
-                    showLanguageChangeConfirmationDialog(selectedLang)
-                }
-            }
-            .show()
-    }
-
-    private fun showLanguageChangeConfirmationDialog(selectedLang: String) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Cambia lingua")
-            .setMessage("L'applicazione scaricherà la lingua selezionata e verrà riavviata. Continuare?")
-            .setPositiveButton("OK") { _, _ ->
-                languageManager.downloadLanguage(selectedLang) {
-                    LocaleHelper.setLocale(requireContext(), selectedLang)
-                    requireActivity().recreate()
-                }
-            }
-            .setNegativeButton("Annulla", null)
             .show()
     }
 

@@ -1,0 +1,16 @@
+<resources>
+    <!-- Traduzioni parziali per l'arabo -->
+
+    <!-- Fragment Labels -->
+    <string name="label_settings">إعدادات</string>
+
+    <!-- SettingsFragment Layout -->
+    <string name="title_background">الخلفية</string>
+    <string name="button_change_background_color">تغيير لون الخلفية</string>
+    <string name="button_choose_from_gallery">اختر من المعرض</string>
+    <string name="title_fonts">الخطوط</string>
+    <string name="button_change_text_color">تغيير لون النص</string>
+    <string name="title_text_size">حجم النص</string>
+    <string name="language">اللغة</string>
+
+</resources>

@@ -1,0 +1,16 @@
+<resources>
+    <!-- Traduzioni parziali per lo spagnolo -->
+
+    <!-- Fragment Labels -->
+    <string name="label_settings">Ajustes</string>
+
+    <!-- SettingsFragment Layout -->
+    <string name="title_background">Fondo</string>
+    <string name="button_change_background_color">Cambiar color de fondo</string>
+    <string name="button_choose_from_gallery">Elegir de la galería</string>
+    <string name="title_fonts">Fuentes</string>
+    <string name="button_change_text_color">Cambiar color del texto</string>
+    <string name="title_text_size">Tamaño del texto</string>
+    <string name="language">Idioma</string>
+
+</resources>

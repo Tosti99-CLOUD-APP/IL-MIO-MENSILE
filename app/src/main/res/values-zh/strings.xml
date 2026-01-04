@@ -1,0 +1,16 @@
+<resources>
+    <!-- Traduzioni parziali per il cinese (semplificato) -->
+
+    <!-- Fragment Labels -->
+    <string name="label_settings">设置</string>
+
+    <!-- SettingsFragment Layout -->
+    <string name="title_background">背景</string>
+    <string name="button_change_background_color">更改背景颜色</string>
+    <string name="button_choose_from_gallery">从图库中选择</string>
+    <string name="title_fonts">字体</string>
+    <string name="button_change_text_color">更改文字颜色</string>
+    <string name="title_text_size">文字大小</string>
+    <string name="language">语言</string>
+
+</resources>

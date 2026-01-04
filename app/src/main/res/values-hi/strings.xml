@@ -1,0 +1,16 @@
+<resources>
+    <!-- Traduzioni parziali per l'hindi -->
+
+    <!-- Fragment Labels -->
+    <string name="label_settings">सेटिंग्स</string>
+
+    <!-- SettingsFragment Layout -->
+    <string name="title_background">पृष्ठभूमि</string>
+    <string name="button_change_background_color">बैकग्राउंड का रंग बदलें</string>
+    <string name="button_choose_from_gallery">गैलरी से चुनें</string>
+    <string name="title_fonts">फ़ॉन्ट्स</string>
+    <string name="button_change_text_color">टेक्स्ट का रंग बदलें</string>
+    <string name="title_text_size">टेक्स्ट का आकार</string>
+    <string name="language">भाषा</string>
+
+</resources>

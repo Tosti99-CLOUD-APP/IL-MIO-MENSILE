@@ -57,9 +57,9 @@ class FirstFragment : Fragment() {
 
     private val workViewModel: WorkViewModel by viewModels()
     private var selectedDate: Date = Date()
-    private val monthFormatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
-    private val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
-    private val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private lateinit var monthFormatter: SimpleDateFormat
+    private lateinit var timeFormatter: SimpleDateFormat
+    private lateinit var dateFormatter: SimpleDateFormat
 
     private var monthForPdf: String? = null
     private var isPreviewForPdf: Boolean = false
@@ -86,6 +86,7 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        updateFormatters()
         setupMenu()
         applyTheme() // Apply theme
 
@@ -186,7 +187,15 @@ class FirstFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        updateFormatters()
         applyTheme() // Re-apply theme on resume
+    }
+
+    private fun updateFormatters() {
+        val currentLocale = resources.configuration.locales[0]
+        monthFormatter = SimpleDateFormat("MMMM yyyy", currentLocale)
+        timeFormatter = SimpleDateFormat("HH:mm", currentLocale)
+        dateFormatter = SimpleDateFormat("dd/MM/yyyy", currentLocale)
     }
 
     private fun applyTheme() {

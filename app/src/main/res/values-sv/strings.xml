@@ -1,0 +1,16 @@
+<resources>
+    <!-- Traduzioni parziali per lo svedese -->
+
+    <!-- Fragment Labels -->
+    <string name="label_settings">Inställningar</string>
+
+    <!-- SettingsFragment Layout -->
+    <string name="title_background">Bakgrund</string>
+    <string name="button_change_background_color">Ändra bakgrundsfärg</string>
+    <string name="button_choose_from_gallery">Välj från galleriet</string>
+    <string name="title_fonts">Teckensnitt</string>
+    <string name="button_change_text_color">Ändra textfärg</string>
+    <string name="title_text_size">Textstorlek</string>
+    <string name="language">Språk</string>
+
+</resources>
