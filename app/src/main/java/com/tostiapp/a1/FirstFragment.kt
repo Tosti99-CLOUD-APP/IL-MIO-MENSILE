@@ -212,12 +212,15 @@ class FirstFragment : Fragment() {
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+        val datePickerDialog = DatePickerDialog(requireActivity(), { _, selectedYear, selectedMonth, selectedDay ->
             val newCalendar = Calendar.getInstance()
             newCalendar.set(selectedYear, selectedMonth, selectedDay)
             selectedDate = newCalendar.time
             updateDateInput()
-        }, year, month, day).show()
+        }, year, month, day)
+
+        datePickerDialog.setTitle(getString(R.string.dialog_title_select_date))
+        datePickerDialog.show()
     }
 
     private fun updateDateInput() {

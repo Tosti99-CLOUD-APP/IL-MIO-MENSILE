@@ -1,117 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mein Monat</string>
-
-    <!-- Entry Types -->
-    <string-array name="entry_types">
-        <item>@string/entry_type_work</item>
-        <item>@string/entry_type_leave</item>
-        <item>@string/entry_type_vacation</item>
-    </string-array>
-    <string name="entry_type_work">Arbeit</string>
-    <string name="entry_type_leave">Urlaub</string>
-    <string name="entry_type_vacation">Ferien</string>
-
-    <!-- Fragment Labels -->
-    <string name="label_daily_report">Tagesbericht</string>
-    <string name="label_monthly_summary">Mein Monat</string>
-    <string name="label_settings">Einstellungen</string>
-    <string name="label_edit_task">Aufgabe bearbeiten</string>
-    <string name="label_all_tasks">Alle Aufgaben</string>
-    <string name="label_info">Informationen</string>
-
-    <!-- Menu Items -->
-    <string name="action_settings">Einstellungen</string>
-    <string name="menu_create_pdf">PDF erstellen</string>
-    <string name="menu_view_pdf">Gespeicherte PDF anzeigen</string>
-    <string name="menu_preview_pdf">Monatsvorschau</string>
-    <string name="menu_all_tasks">Alle Aufgaben</string>
-    <string name="menu_info">Informationen</string>
-    <string name="menu_settings">Einstellungen</string>
-    <string name="menu_delete">Löschen</string>
-
-    <!-- FirstFragment Layout -->
-    <string name="hint_start_time">Startzeit</string>
-    <string name="hint_end_time">Endzeit</string>
-    <string name="hint_break_time">Pause (Minuten)</string>
-    <string name="hint_travel_kms">Reisekilometer</string>
-    <string name="hint_travel_hours">Reisestunden</string>
-    <string name="hint_task_description">Ausgeführte Aufgabe</string>
-    <string name="hint_company">Firma</string>
-    <string name="button_save">Speichern</string>
-    <string name="text_send_monthly">MONATLICH SENDEN</string>
-    <string name="toast_start_end_time_required">Bitte Start- und Endzeit eingeben</string>
-
-    <!-- EditTaskFragment Layout -->
-    <string name="button_save_changes">Änderungen speichern</string>
-
-    <!-- SettingsFragment Layout -->
-    <string name="title_background">Hintergrund</string>
-    <string name="button_change_background_color">Hintergrundfarbe ändern</string>
-    <string name="button_choose_from_gallery">Aus Galerie auswählen</string>
-    <string name="title_fonts">Schriftarten</string>
-    <string name="button_change_text_color">Textfarbe ändern</string>
-    <string name="title_text_size">Textgröße</string>
-    <string name="language">Sprache</string>
-
-    <!-- Dialogs -->
-    <string name="dialog_title_choose_color">Farbe auswählen</string>
     <string name="dialog_button_cancel">Abbrechen</string>
-    <string name="dialog_title_new_background">Neuer Hintergrund</string>
-    <string name="dialog_message_keep_background">Möchten Sie diesen Hintergrund beibehalten oder zum Standardhintergrund zurückkehren?</string>
-
-    <!-- PDF Generation -->
-    <string name="pdf_summary_title">Zusammenfassung der Arbeitsstunden</string>
-    <string name="pdf_month_label">Monat: %s</string>
+    <string name="menu_preview_pdf">Monatliche Vorschau</string>
+    <string name="hint_company">Unternehmen</string>
+    <string name="text_company_label">Unternehmen:</string>
+    <string name="button_change_text_color">Textfarbe ändern</string>
+    <string name="button_change_background_color">Hintergrundfarbe ändern</string>
+    <string name="title_fonts">Schriftarten</string>
+    <string name="share_file">Datei teilen</string>
+    <string name="csv_share_title">CSV-Datei teilen</string>
+    <string name="txt_share_title">TXT-Datei teilen</string>
+    <string name="menu_create_pdf">PDF erstellen</string>
     <string name="pdf_header_date">Datum</string>
+    <string name="title_text_size">Textgröße</string>
+    <string name="menu_delete">Löschen</string>
+    <string name="csv_creation_error">Fehler beim Erstellen der CSV-Datei</string>
+    <string name="txt_creation_error">Fehler beim Erstellen der TXT-Datei</string>
+    <string name="pdf_preview_creation_error">Fehler beim Erstellen der PDF-Vorschau</string>
+    <string name="pdf_creation_error">Fehler beim Erstellen des PDFs</string>
+    <string name="toast_failed_to_generate_file">Fehler beim Generieren der Datei</string>
+    <string name="toast_failed_to_save_pdf">Fehler beim Speichern des PDFs</string>
+    <string name="toast_error_finding_pdfs">Fehler beim Finden der PDF-Dateien</string>
+    <string name="format_excel">Excel (.csv)</string>
+    <string name="entry_type_vacation">Urlaub</string>
+    <string name="hint_end_time">Jetzt beenden</string>
+    <string name="hint_travel_hours">H Reise</string>
+    <string name="pdf_header_travel_hours">H Reise</string>
+    <string name="app_name">Mein monatlich</string>
+    <string name="label_monthly_summary">Mein monatlich</string>
+    <string name="label_settings">Einstellungen</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="label_info">Informationen</string>
+    <string name="menu_info">Informationen</string>
+    <string name="hint_start_time">Jetzt starten</string>
+    <string name="toast_start_end_time_required">Start- und Endzeit eingeben</string>
+    <string name="text_send_monthly">MONATLICH SENDEN</string>
+    <string name="hint_travel_kms">Fahrstrecke km</string>
+    <string name="pdf_header_travel_kms">Fahrstrecke km</string>
+    <string name="entry_type_work">Arbeit</string>
+    <string name="language">Sprache</string>
     <string name="pdf_header_task">Aufgabe</string>
+    <string name="hint_task_description">Abgeschlossene Aufgabe</string>
+    <string name="pdf_month_label">Monat: %s</string>
+    <string name="text_minutes_short">Min</string>
+    <string name="txt_label_minutes">Minuten</string>
+    <string name="label_edit_task">Aktivität bearbeiten</string>
+    <string name="toast_no_pdf_app">Keine Anwendung gefunden, um diese Datei zu öffnen.</string>
+    <string name="pdf_no_data_message">Keine Daten für den ausgewählten Monat</string>
+    <string name="no_saved_pdfs_found">Keine gespeicherte Datei gefunden.</string>
+    <string name="dialog_title_new_background">Neuer Hintergrund</string>
+    <string name="txt_label_hours">Stunden</string>
+    <string name="pdf_header_vacation_hours">Urlaubsstunden</string>
     <string name="pdf_header_work_hours">Arbeitsstunden</string>
     <string name="pdf_header_leave_hours">Urlaubsstunden</string>
-    <string name="pdf_header_vacation_hours">Ferienstunden</string>
     <string name="pdf_header_break">Pause</string>
-    <string name="pdf_header_travel_kms">Reisekilometer</string>
-    <string name="pdf_header_travel_hours">Reisestunden</string>
-    <string name="pdf_totals_label">Gesamt</string>
-    <string name="pdf_no_data_message">Keine Daten für den ausgewählten Monat</string>
-    <string name="pdf_creation_success">PDF erfolgreich erstellt!</string>
-    <string name="pdf_creation_error">Fehler beim Erstellen der PDF-Datei</string>
-    <string name="pdf_preview_creation_error">Fehler beim Erstellen der PDF-Vorschau</string>
-    <string name="no_saved_pdfs_found">Keine gespeicherten Dateien gefunden.</string>
-    <string name="select_pdf_to_open">Wählen Sie eine Datei zum Öffnen</string>
-
-    <!-- TXT Generation -->
-    <string name="txt_share_title">TXT-Datei teilen</string>
-    <string name="txt_creation_error">Fehler beim Erstellen der TXT-Datei</string>
-    <string name="txt_label_type">Typ</string>
-    <string name="txt_label_hours">Stunden</string>
-    <string name="txt_label_minutes">Minuten</string>
-
-    <!-- CSV Generation -->
-    <string name="csv_share_title">CSV-Datei teilen</string>
-    <string name="csv_creation_error">Fehler beim Erstellen der CSV-Datei</string>
-
-    <!-- Info Fragment -->
-    <string name="info_version_label">App-Version: %s</string>
-    <string name="share_file">Datei teilen</string>
-
-    <!-- Toast Messages -->
-    <string name="toast_failed_to_generate_file">Fehler beim Generieren der Datei.</string>
-    <string name="toast_pdf_saved_to_downloads">PDF in Downloads gespeichert</string>
-    <string name="toast_failed_to_save_pdf">Fehler beim Speichern der PDF-Datei.</string>
-    <string name="toast_no_pdf_app">Keine Anwendung zum Öffnen dieser Datei gefunden.</string>
-
-    <!-- Dialog Titles -->
-    <string name="dialog_title_select_format">Format auswählen</string>
-    <string name="dialog_title_select_month">Monat auswählen</string>
-
-    <!-- Format Strings -->
-    <string name="format_word">Word (.txt)</string>
-    <string name="format_excel">Excel (.csv)</string>
+    <string name="hint_break_time">Pause (Minuten)</string>
     <string name="format_pdf">PDF</string>
-
-    <!-- Text Labels -->
-    <string name="text_company_label">Firma: </string>
-    <string name="text_minutes_short">min</string>
-    <string name="toast_error_finding_pdfs">Fehler beim Finden von PDF-Dateien</string>
-
+    <string name="pdf_creation_success">PDF erfolgreich erstellt!</string>
+    <string name="toast_pdf_saved_to_downloads">PDF nella cartella Download</string>
+    <string name="entry_type_leave">Berechtigungen</string>
+    <string name="label_daily_report">Täglicher Bericht</string>
+    <string name="pdf_summary_title">Zusammenfassung der gearbeiteten Stunden</string>
+    <string name="hint_select_date">Wählen Sie ein Datum</string>
+    <string name="button_save">Enregistrer</string>
+    <string name="button_save_changes">Änderungen speichern</string>
+    <string name="button_choose_from_gallery">Aus der Galerie wählen</string>
+    <string name="dialog_title_choose_color">Wählen Sie eine Farbe</string>
+    <string name="dialog_title_select_format">Format auswählen</string>
+    <string name="dialog_title_select_date">Wählen Sie ein Datum</string>
+    <string name="select_pdf_to_open">Wählen Sie eine Datei zum Öffnen</string>
+    <string name="dialog_title_select_month">Wählen Sie einen Monat</string>
+    <string name="title_background">Hintergrund</string>
+    <string name="txt_label_type">Typ</string>
+    <string name="pdf_totals_label">Gesamtsumme</string>
+    <string name="label_all_tasks">Alle Aktivitäten</string>
+    <string name="menu_all_tasks">Alle Aktivitäten</string>
+    <string name="info_version_label">App-Version: %s</string>
+    <string name="menu_view_pdf">Gespeicherte PDFs anzeigen</string>
+    <string name="dialog_message_keep_background">Möchten Sie diesen Hintergrund beibehalten oder auf den Standard zurücksetzen?</string>
+    <string name="format_word">Word (.txt)</string>
 </resources>

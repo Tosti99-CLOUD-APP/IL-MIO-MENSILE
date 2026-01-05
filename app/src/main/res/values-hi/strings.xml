@@ -1,16 +1,82 @@
 <resources>
-    <!-- Traduzioni parziali per l'hindi -->
-
-    <!-- Fragment Labels -->
-    <string name="label_settings">सेटिंग्स</string>
-
-    <!-- SettingsFragment Layout -->
-    <string name="title_background">पृष्ठभूमि</string>
-    <string name="button_change_background_color">बैकग्राउंड का रंग बदलें</string>
-    <string name="button_choose_from_gallery">गैलरी से चुनें</string>
-    <string name="title_fonts">फ़ॉन्ट्स</string>
+    <string name="dialog_button_cancel">रद्द करें</string>
+    <string name="menu_preview_pdf">मासिक पूर्वावलोकन</string>
+    <string name="hint_company">कंपनी</string>
+    <string name="text_company_label">कंपनी:</string>
     <string name="button_change_text_color">टेक्स्ट का रंग बदलें</string>
+    <string name="button_change_background_color">पृष्ठभूमि का रंग बदलें</string>
+    <string name="title_fonts">फॉन्ट</string>
+    <string name="share_file">फ़ाइल साझा करें</string>
+    <string name="csv_share_title">CSV फ़ाइल साझा करें</string>
+    <string name="txt_share_title">TXT फ़ाइल साझा करें</string>
+    <string name="menu_create_pdf">पीडीएफ बनाएं</string>
+    <string name="pdf_header_date">तिथि</string>
     <string name="title_text_size">टेक्स्ट का आकार</string>
+    <string name="menu_delete">हटाएँ</string>
+    <string name="csv_creation_error">CSV फ़ाइल बनाने में त्रुटि</string>
+    <string name="txt_creation_error">TXT फ़ाइल बनाने में त्रुटि</string>
+    <string name="pdf_preview_creation_error">पीडीएफ पूर्वावलोकन बनाने में त्रुटि</string>
+    <string name="pdf_creation_error">पीडीएफ बनाने में त्रुटि</string>
+    <string name="toast_failed_to_generate_file">फ़ाइल बनाने में त्रुटि</string>
+    <string name="toast_failed_to_save_pdf">PDF सहेजने में त्रुटि</string>
+    <string name="toast_error_finding_pdfs">PDF फ़ाइलें खोजने में त्रुटि</string>
+    <string name="format_excel">Excel (.csv)</string>
+    <string name="entry_type_vacation">छुट्टी</string>
+    <string name="hint_end_time">अभी समाप्त करें</string>
+    <string name="hint_travel_hours">H यात्रा</string>
+    <string name="pdf_header_travel_hours">H यात्रा</string>
+    <string name="app_name">मेरा मासिक</string>
+    <string name="label_monthly_summary">मेरा मासिक</string>
+    <string name="label_settings">सेटिंग्स</string>
+    <string name="action_settings">सेटिंग्स</string>
+    <string name="menu_settings">सेटिंग्स</string>
+    <string name="label_info">जानकारी</string>
+    <string name="menu_info">जानकारी</string>
+    <string name="hint_start_time">अभी शुरू करें</string>
+    <string name="toast_start_end_time_required">प्रारंभ और समाप्ति समय दर्ज करें</string>
+    <string name="text_send_monthly">मासिक भेजें</string>
+    <string name="hint_travel_kms">यात्रा किमी</string>
+    <string name="pdf_header_travel_kms">यात्रा किमी</string>
+    <string name="entry_type_work">काम</string>
     <string name="language">भाषा</string>
-
+    <string name="pdf_header_task">कार्य</string>
+    <string name="hint_task_description">पूरी की गई कार्य</string>
+    <string name="pdf_month_label">माह: %s</string>
+    <string name="text_minutes_short">मिनट</string>
+    <string name="txt_label_minutes">मिनट</string>
+    <string name="label_edit_task">गतिविधि संपादित करें</string>
+    <string name="toast_no_pdf_app">इस फ़ाइल को खोलने के लिए कोई एप्लिकेशन नहीं मिली।</string>
+    <string name="pdf_no_data_message">चयनित माह के लिए कोई डेटा नहीं</string>
+    <string name="no_saved_pdfs_found">कोई सहेजा हुआ फ़ाइल नहीं मिली।</string>
+    <string name="dialog_title_new_background">नया पृष्ठभूमि</string>
+    <string name="txt_label_hours">घंटे</string>
+    <string name="pdf_header_vacation_hours">छुट्टी के घंटे</string>
+    <string name="pdf_header_work_hours">कार्य घंटे</string>
+    <string name="pdf_header_leave_hours">अनुमति घंटे</string>
+    <string name="pdf_header_break">विराम</string>
+    <string name="hint_break_time">विराम (मिनट)</string>
+    <string name="format_pdf">PDF</string>
+    <string name="pdf_creation_success">PDF सफलतापूर्वक बनाया गया!</string>
+    <string name="toast_pdf_saved_to_downloads">PDF डाउनलोड में सहेजा गया</string>
+    <string name="entry_type_leave">अनुमति</string>
+    <string name="label_daily_report">दैनिक रिपोर्ट</string>
+    <string name="pdf_summary_title">काम किए गए घंटे का सारांश</string>
+    <string name="hint_select_date">एक तारीख चुनें</string>
+    <string name="button_save">सहेजें</string>
+    <string name="button_save_changes">परिवर्तन सहेजें</string>
+    <string name="button_choose_from_gallery">गैलरी से चुनें</string>
+    <string name="dialog_title_choose_color">रंग चुनें</string>
+    <string name="dialog_title_select_format">प्रारूप चुनें</string>
+    <string name="dialog_title_select_date">एक तारीख चुनें</string>
+    <string name="select_pdf_to_open">खोलने के लिए फ़ाइल चुनें</string>
+    <string name="dialog_title_select_month">माह चुनें</string>
+    <string name="title_background">पृष्ठभूमि</string>
+    <string name="txt_label_type">प्रकार</string>
+    <string name="pdf_totals_label">टोटल</string>
+    <string name="label_all_tasks">सभी गतिविधियाँ</string>
+    <string name="menu_all_tasks">सभी गतिविधियाँ</string>
+    <string name="info_version_label">ऐप संस्करण: %s</string>
+    <string name="menu_view_pdf">सहेजे गए PDF देखें</string>
+    <string name="dialog_message_keep_background">क्या आप इस पृष्ठभूमि को रखना चाहते हैं या डिफ़ॉल्ट पर पुनर्स्थापित करना चाहते हैं?</string>
+    <string name="format_word">Word (.txt)</string>
 </resources>

@@ -1,16 +1,82 @@
 <resources>
-    <!-- Traduzioni parziali per l'arabo -->
-
-    <!-- Fragment Labels -->
-    <string name="label_settings">إعدادات</string>
-
-    <!-- SettingsFragment Layout -->
-    <string name="title_background">الخلفية</string>
-    <string name="button_change_background_color">تغيير لون الخلفية</string>
-    <string name="button_choose_from_gallery">اختر من المعرض</string>
-    <string name="title_fonts">الخطوط</string>
+    <string name="dialog_button_cancel">إلغاء</string>
+    <string name="menu_preview_pdf">معاينة شهرية</string>
+    <string name="hint_company">شركة</string>
+    <string name="text_company_label">شركة:</string>
     <string name="button_change_text_color">تغيير لون النص</string>
+    <string name="button_change_background_color">تغيير لون الخلفية</string>
+    <string name="title_fonts">الخطوط</string>
+    <string name="share_file">مشاركة الملف</string>
+    <string name="csv_share_title">مشاركة ملف CSV</string>
+    <string name="txt_share_title">مشاركة ملف TXT</string>
+    <string name="menu_create_pdf">إنشاء PDF</string>
+    <string name="pdf_header_date">التاريخ</string>
     <string name="title_text_size">حجم النص</string>
-    <string name="language">اللغة</string>
-
+    <string name="menu_delete">حذف</string>
+    <string name="csv_creation_error">خطأ أثناء إنشاء ملف CSV</string>
+    <string name="txt_creation_error">خطأ أثناء إنشاء ملف TXT</string>
+    <string name="pdf_preview_creation_error">خطأ أثناء إنشاء معاينة PDF</string>
+    <string name="pdf_creation_error">خطأ أثناء إنشاء PDF</string>
+    <string name="toast_failed_to_generate_file">خطأ أثناء إنشاء الملف</string>
+    <string name="toast_failed_to_save_pdf">خطأ أثناء حفظ PDF</string>
+    <string name="toast_error_finding_pdfs">خطأ في العثور على ملفات PDF</string>
+    <string name="format_excel">Excel (.csv)</string>
+    <string name="entry_type_vacation">إجازة</string>
+    <string name="hint_end_time">إنهاء الآن</string>
+    <string name="hint_travel_hours">رحلة H</string>
+    <string name="pdf_header_travel_hours">رحلة H</string>
+    <string name="app_name">شهري الخاص بي</string>
+    <string name="label_monthly_summary">شهري الخاص بي</string>
+    <string name="label_settings">الإعدادات</string>
+    <string name="action_settings">الإعدادات</string>
+    <string name="menu_settings">الإعدادات</string>
+    <string name="label_info">معلومات</string>
+    <string name="menu_info">معلومات</string>
+    <string name="hint_start_time">ابدأ الآن</string>
+    <string name="toast_start_end_time_required">أدخل وقت البدء والانتهاء</string>
+    <string name="text_send_monthly">إرسال شهري</string>
+    <string name="hint_travel_kms">كم السفر</string>
+    <string name="pdf_header_travel_kms">كم السفر</string>
+    <string name="entry_type_work">عمل</string>
+    <string name="language">لغة</string>
+    <string name="pdf_header_task">وظيفة</string>
+    <string name="hint_task_description">المهمة المنجزة</string>
+    <string name="pdf_month_label">شهر: %s</string>
+    <string name="text_minutes_short">د</string>
+    <string name="txt_label_minutes">دقيقة</string>
+    <string name="label_edit_task">تعديل النشاط</string>
+    <string name="toast_no_pdf_app">لم يتم العثور على تطبيق لفتح هذا الملف.</string>
+    <string name="pdf_no_data_message">لا توجد بيانات للشهر المحدد</string>
+    <string name="no_saved_pdfs_found">لم يتم العثور على ملفات محفوظة.</string>
+    <string name="dialog_title_new_background">خلفية جديدة</string>
+    <string name="txt_label_hours">ساعات</string>
+    <string name="pdf_header_vacation_hours">ساعات الإجازة</string>
+    <string name="pdf_header_work_hours">ساعات العمل</string>
+    <string name="pdf_header_leave_hours">ساعات إذن</string>
+    <string name="pdf_header_break">استراحة</string>
+    <string name="hint_break_time">استراحة (دقائق)</string>
+    <string name="format_pdf">PDF</string>
+    <string name="pdf_creation_success">تم إنشاء PDF بنجاح!</string>
+    <string name="toast_pdf_saved_to_downloads">تم حفظ PDF في التنزيلات</string>
+    <string name="entry_type_leave">أذونات</string>
+    <string name="label_daily_report">تقرير يومي</string>
+    <string name="pdf_summary_title">ملخص ساعات العمل</string>
+    <string name="hint_select_date">حدد تاريخًا</string>
+    <string name="button_save">حفظ</string>
+    <string name="button_save_changes">حفظ التغييرات</string>
+    <string name="button_choose_from_gallery">اختر من المعرض</string>
+    <string name="dialog_title_choose_color">اختر لونًا</string>
+    <string name="dialog_title_select_format">حدد التنسيق</string>
+    <string name="dialog_title_select_date">حدد تاريخًا</string>
+    <string name="select_pdf_to_open">اختر ملفًا لفتحه</string>
+    <string name="dialog_title_select_month">اختر شهرًا</string>
+    <string name="title_background">خلفية</string>
+    <string name="txt_label_type">نوع</string>
+    <string name="pdf_totals_label">الإجماليات</string>
+    <string name="label_all_tasks">جميع الأنشطة</string>
+    <string name="menu_all_tasks">جميع الأنشطة</string>
+    <string name="info_version_label">إصدار التطبيق: %s</string>
+    <string name="menu_view_pdf">عرض ملفات PDF المحفوظة</string>
+    <string name="dialog_message_keep_background">هل تريد الاحتفاظ بهذا الخلفية أم استعادتها إلى الافتراضية؟</string>
+    <string name="format_word">Word (.txt)</string>
 </resources>

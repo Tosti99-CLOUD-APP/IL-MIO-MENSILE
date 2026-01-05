@@ -1,16 +1,82 @@
 <resources>
-    <!-- Traduzioni parziali per il turco -->
-
-    <!-- Fragment Labels -->
-    <string name="label_settings">Ayarlar</string>
-
-    <!-- SettingsFragment Layout -->
-    <string name="title_background">Arka plan</string>
+    <string name="dialog_button_cancel">İptal</string>
+    <string name="menu_preview_pdf">Aylık önizleme</string>
+    <string name="hint_company">Şirket</string>
+    <string name="text_company_label">Şirket:</string>
+    <string name="button_change_text_color">Metni renk değiştir</string>
     <string name="button_change_background_color">Arka plan rengini değiştir</string>
-    <string name="button_choose_from_gallery">Galeriden seç</string>
     <string name="title_fonts">Yazı tipleri</string>
-    <string name="button_change_text_color">Metin rengini değiştir</string>
+    <string name="share_file">Dosya paylaş</string>
+    <string name="csv_share_title">CSV dosyasını paylaş</string>
+    <string name="txt_share_title">TXT dosyasını paylaş</string>
+    <string name="menu_create_pdf">PDF oluştur</string>
+    <string name="pdf_header_date">Tarih</string>
     <string name="title_text_size">Metin boyutu</string>
+    <string name="menu_delete">Sil</string>
+    <string name="csv_creation_error">CSV dosyasını oluştururken hata</string>
+    <string name="txt_creation_error">TXT dosyasını oluştururken hata</string>
+    <string name="pdf_preview_creation_error">PDF önizlemesini oluştururken hata</string>
+    <string name="pdf_creation_error">PDF oluştururken hata</string>
+    <string name="toast_failed_to_generate_file">Dosya oluşturulurken hata</string>
+    <string name="toast_failed_to_save_pdf">PDF kaydetme hatası</string>
+    <string name="toast_error_finding_pdfs">PDF dosyalarını bulurken hata</string>
+    <string name="format_excel">Excel (.csv)</string>
+    <string name="entry_type_vacation">Tatil</string>
+    <string name="hint_end_time">Şimdi bitir</string>
+    <string name="hint_travel_hours">H seyahat</string>
+    <string name="pdf_header_travel_hours">H seyahat</string>
+    <string name="app_name">Benim aylık</string>
+    <string name="label_monthly_summary">Benim aylık</string>
+    <string name="label_settings">Ayarlar</string>
+    <string name="action_settings">Ayarlar</string>
+    <string name="menu_settings">Ayarlar</string>
+    <string name="label_info">Bilgi</string>
+    <string name="menu_info">Bilgi</string>
+    <string name="hint_start_time">Şimdi başla</string>
+    <string name="toast_start_end_time_required">Başlangıç ve bitiş saatini girin</string>
+    <string name="text_send_monthly">Aylık gönder</string>
+    <string name="hint_travel_kms">Seyahat km</string>
+    <string name="pdf_header_travel_kms">Seyahat km</string>
+    <string name="entry_type_work">Çalışma</string>
     <string name="language">Dil</string>
-
+    <string name="pdf_header_task">Görev</string>
+    <string name="hint_task_description">Tamamlanan görev</string>
+    <string name="pdf_month_label">Ay: %s</string>
+    <string name="text_minutes_short">dk</string>
+    <string name="txt_label_minutes">dakika</string>
+    <string name="label_edit_task">Faaliyeti düzenle</string>
+    <string name="toast_no_pdf_app">Bu dosyayı açmak için uygulama bulunamadı.</string>
+    <string name="pdf_no_data_message">Seçilen ay için veri yok</string>
+    <string name="no_saved_pdfs_found">Kaydedilmiş dosya bulunamadı.</string>
+    <string name="dialog_title_new_background">Yeni arka plan</string>
+    <string name="txt_label_hours">Saat</string>
+    <string name="pdf_header_vacation_hours">Tatil saatleri</string>
+    <string name="pdf_header_work_hours">Çalışma saatleri</string>
+    <string name="pdf_header_leave_hours">İzin saatleri</string>
+    <string name="pdf_header_break">Mola</string>
+    <string name="hint_break_time">Mola (dakika)</string>
+    <string name="format_pdf">PDF</string>
+    <string name="pdf_creation_success">PDF başarıyla oluşturuldu!</string>
+    <string name="toast_pdf_saved_to_downloads">PDF indirildi klasöre kaydedildi</string>
+    <string name="entry_type_leave">İzinler</string>
+    <string name="label_daily_report">Günlük Rapor</string>
+    <string name="pdf_summary_title">Çalışılan saatlerin özeti</string>
+    <string name="hint_select_date">Bir tarih seçin</string>
+    <string name="button_save">Kaydet</string>
+    <string name="button_save_changes">Değişiklikleri kaydet</string>
+    <string name="button_choose_from_gallery">Galeriden seç</string>
+    <string name="dialog_title_choose_color">Bir renk seç</string>
+    <string name="dialog_title_select_format">Biçim seç</string>
+    <string name="dialog_title_select_date">Bir tarih seçin</string>
+    <string name="select_pdf_to_open">Açmak için dosya seç</string>
+    <string name="dialog_title_select_month">Bir ay seç</string>
+    <string name="title_background">Arka plan</string>
+    <string name="txt_label_type">Tür</string>
+    <string name="pdf_totals_label">Toplam</string>
+    <string name="label_all_tasks">Tüm aktiviteler</string>
+    <string name="menu_all_tasks">Tüm aktiviteler</string>
+    <string name="info_version_label">Uygulama sürümü: %s</string>
+    <string name="menu_view_pdf">Kaydedilen PDF\'leri görüntüle</string>
+    <string name="dialog_message_keep_background">Bu resmi korumak istiyor musunuz yoksa varsayılan ayara mı döndürmek istiyorsunuz?</string>
+    <string name="format_word">Word (.txt)</string>
 </resources>

@@ -1,16 +1,82 @@
 <resources>
-    <!-- Traduzioni parziali per l'olandese -->
-
-    <!-- Fragment Labels -->
-    <string name="label_settings">Instellingen</string>
-
-    <!-- SettingsFragment Layout -->
-    <string name="title_background">Achtergrond</string>
-    <string name="button_change_background_color">Achtergrondkleur wijzigen</string>
-    <string name="button_choose_from_gallery">Kies uit galerij</string>
-    <string name="title_fonts">Lettertypen</string>
-    <string name="button_change_text_color">Tekstkleur wijzigen</string>
+    <string name="dialog_button_cancel">Annuleren</string>
+    <string name="menu_preview_pdf">Maandelijkse preview</string>
+    <string name="hint_company">Bedrijf</string>
+    <string name="text_company_label">Bedrijf:</string>
+    <string name="button_change_text_color">Tekstkleur aanpassen</string>
+    <string name="button_change_background_color">Achtergrondkleur aanpassen</string>
+    <string name="title_fonts">Lettertypes</string>
+    <string name="share_file">Bestand delen</string>
+    <string name="csv_share_title">CSV-bestand delen</string>
+    <string name="txt_share_title">TXT-bestand delen</string>
+    <string name="menu_create_pdf">PDF maken</string>
+    <string name="pdf_header_date">Datum</string>
     <string name="title_text_size">Tekstgrootte</string>
+    <string name="menu_delete">Verwijderen</string>
+    <string name="csv_creation_error">Fout bij het maken van CSV-bestand</string>
+    <string name="txt_creation_error">Fout bij het maken van TXT-bestand</string>
+    <string name="pdf_preview_creation_error">Fout bij het maken van PDF-voorbeeld</string>
+    <string name="pdf_creation_error">Fout bij het maken van PDF</string>
+    <string name="toast_failed_to_generate_file">Fout bij het genereren van bestand</string>
+    <string name="toast_failed_to_save_pdf">Fout bij het opslaan van PDF</string>
+    <string name="toast_error_finding_pdfs">Fout bij het vinden van PDF-bestanden</string>
+    <string name="format_excel">Excel (.csv)</string>
+    <string name="entry_type_vacation">Vakantie</string>
+    <string name="hint_end_time">Eindig nu</string>
+    <string name="hint_travel_hours">H reis</string>
+    <string name="pdf_header_travel_hours">H reis</string>
+    <string name="app_name">Mijn maandelijkse</string>
+    <string name="label_monthly_summary">Mijn maandelijkse</string>
+    <string name="label_settings">Instellingen</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="menu_settings">Instellingen</string>
+    <string name="label_info">Informatie</string>
+    <string name="menu_info">Informatie</string>
+    <string name="hint_start_time">Nu beginnen</string>
+    <string name="toast_start_end_time_required">Voer start- en eindtijd in</string>
+    <string name="text_send_monthly">Verzend maandelijks</string>
+    <string name="hint_travel_kms">Reisekilometers</string>
+    <string name="pdf_header_travel_kms">Reisekilometers</string>
+    <string name="entry_type_work">Werk</string>
     <string name="language">Taal</string>
-
+    <string name="pdf_header_task">Functie</string>
+    <string name="hint_task_description">Voltooide taak</string>
+    <string name="pdf_month_label">Maand: %s</string>
+    <string name="text_minutes_short">min</string>
+    <string name="txt_label_minutes">minuten</string>
+    <string name="label_edit_task">Activiteit aanpassen</string>
+    <string name="toast_no_pdf_app">Geen applicatie gevonden om dit bestand te openen.</string>
+    <string name="pdf_no_data_message">Geen gegevens voor de geselecteerde maand</string>
+    <string name="no_saved_pdfs_found">Geen opgeslagen bestanden gevonden.</string>
+    <string name="dialog_title_new_background">Nieuwe achtergrond</string>
+    <string name="txt_label_hours">Uren</string>
+    <string name="pdf_header_vacation_hours">Vakanturen</string>
+    <string name="pdf_header_work_hours">Werkuren</string>
+    <string name="pdf_header_leave_hours">Verlofuren</string>
+    <string name="pdf_header_break">Pauze</string>
+    <string name="hint_break_time">Pauze (minuten)</string>
+    <string name="format_pdf">PDF</string>
+    <string name="pdf_creation_success">PDF succesvol gemaakt!</string>
+    <string name="toast_pdf_saved_to_downloads">PDF opgeslagen in Downloads</string>
+    <string name="entry_type_leave">Machtigingen</string>
+    <string name="label_daily_report">Dagelijks rapport</string>
+    <string name="pdf_summary_title">Samenvatting gewerkte uren</string>
+    <string name="hint_select_date">Selecteer een datum</string>
+    <string name="button_save">Opslaan</string>
+    <string name="button_save_changes">Wijzigingen opslaan</string>
+    <string name="button_choose_from_gallery">Kies uit galerij</string>
+    <string name="dialog_title_choose_color">Kies een kleur</string>
+    <string name="dialog_title_select_format">Formaat kiezen</string>
+    <string name="dialog_title_select_date">Selecteer een datum</string>
+    <string name="select_pdf_to_open">Kies een bestand om te openen</string>
+    <string name="dialog_title_select_month">Kies een maand</string>
+    <string name="title_background">Achtergrond</string>
+    <string name="txt_label_type">Type</string>
+    <string name="pdf_totals_label">Totaal</string>
+    <string name="label_all_tasks">Alle activiteiten</string>
+    <string name="menu_all_tasks">Alle activiteiten</string>
+    <string name="info_version_label">App versie: %s</string>
+    <string name="menu_view_pdf">Bekijk opgeslagen PDF\'s</string>
+    <string name="dialog_message_keep_background">Wil je deze achtergrond behouden of herstellen naar de standaard?</string>
+    <string name="format_word">Word (.txt)</string>
 </resources>

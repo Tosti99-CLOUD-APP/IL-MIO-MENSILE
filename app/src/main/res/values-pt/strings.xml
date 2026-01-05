@@ -1,16 +1,82 @@
 <resources>
-    <!-- Traduzioni parziali per il portoghese -->
-
-    <!-- Fragment Labels -->
-    <string name="label_settings">Configurações</string>
-
-    <!-- SettingsFragment Layout -->
-    <string name="title_background">Fundo</string>
-    <string name="button_change_background_color">Mudar a cor de fundo</string>
-    <string name="button_choose_from_gallery">Escolher da galeria</string>
+    <string name="dialog_button_cancel">Cancelar</string>
+    <string name="menu_preview_pdf">Visualização mensal</string>
+    <string name="hint_company">Empresa</string>
+    <string name="text_company_label">Empresa:</string>
+    <string name="button_change_text_color">Mudar cor do texto</string>
+    <string name="button_change_background_color">Mudar cor de fundo</string>
     <string name="title_fonts">Fontes</string>
-    <string name="button_change_text_color">Mudar a cor do texto</string>
-    <string name="title_text_size">Tamanho do Texto</string>
-    <string name="language">Idioma</string>
-
+    <string name="share_file">Compartilhar arquivo</string>
+    <string name="csv_share_title">Compartilhar arquivo CSV</string>
+    <string name="txt_share_title">Compartilhar arquivo TXT</string>
+    <string name="menu_create_pdf">Criar PDF</string>
+    <string name="pdf_header_date">Data</string>
+    <string name="title_text_size">Tamanho do texto</string>
+    <string name="menu_delete">Excluir</string>
+    <string name="csv_creation_error">Erro ao criar arquivo CSV</string>
+    <string name="txt_creation_error">Erro ao criar arquivo TXT</string>
+    <string name="pdf_preview_creation_error">Erro ao criar visualização do PDF</string>
+    <string name="pdf_creation_error">Erro ao criar PDF</string>
+    <string name="toast_failed_to_generate_file">Erro ao gerar arquivo</string>
+    <string name="toast_failed_to_save_pdf">Erro ao salvar PDF</string>
+    <string name="toast_error_finding_pdfs">Erro ao encontrar arquivos PDF</string>
+    <string name="format_excel">Excel (.csv)</string>
+    <string name="entry_type_vacation">Férias</string>
+    <string name="hint_end_time">Finalizar agora</string>
+    <string name="hint_travel_hours">H viagem</string>
+    <string name="pdf_header_travel_hours">H Viagem</string>
+    <string name="app_name">Meu mensal</string>
+    <string name="label_monthly_summary">Meu mensal</string>
+    <string name="label_settings">Configurações</string>
+    <string name="action_settings">Configurações</string>
+    <string name="menu_settings">Configurações</string>
+    <string name="label_info">Informação</string>
+    <string name="menu_info">Informação</string>
+    <string name="hint_start_time">Começar agora</string>
+    <string name="toast_start_end_time_required">Insira hora de início e fim</string>
+    <string name="text_send_monthly">ENVIAR MENSAL</string>
+    <string name="hint_travel_kms">km de deslocamento</string>
+    <string name="pdf_header_travel_kms">km de deslocamento</string>
+    <string name="entry_type_work">Trabalho</string>
+    <string name="language">Língua</string>
+    <string name="pdf_header_task">Função</string>
+    <string name="hint_task_description">Tarefa concluída</string>
+    <string name="pdf_month_label">Mês: %s</string>
+    <string name="text_minutes_short">min</string>
+    <string name="txt_label_minutes">minutos</string>
+    <string name="label_edit_task">Editar atividade</string>
+    <string name="toast_no_pdf_app">Nenhuma aplicação encontrada para abrir este arquivo.</string>
+    <string name="pdf_no_data_message">Nenhum dado para o mês selecionado</string>
+    <string name="no_saved_pdfs_found">Nenhum arquivo salvo encontrado.</string>
+    <string name="dialog_title_new_background">Novo fundo</string>
+    <string name="txt_label_hours">Horas</string>
+    <string name="pdf_header_vacation_hours">Horas de férias</string>
+    <string name="pdf_header_work_hours">Horas de trabalho</string>
+    <string name="pdf_header_leave_hours">Horas de licença</string>
+    <string name="pdf_header_break">Pausa</string>
+    <string name="hint_break_time">Pausa (minutos)</string>
+    <string name="format_pdf">PDF</string>
+    <string name="pdf_creation_success">PDF успешно создан!</string>
+    <string name="toast_pdf_saved_to_downloads">PDF salvo na Downloads</string>
+    <string name="entry_type_leave">Permissões</string>
+    <string name="label_daily_report">Relatório diário</string>
+    <string name="pdf_summary_title">Resumo de horas trabalhadas</string>
+    <string name="hint_select_date">Selecione uma data</string>
+    <string name="button_save">Salvar</string>
+    <string name="button_save_changes">Salvar alterações</string>
+    <string name="button_choose_from_gallery">Escolher na galeria</string>
+    <string name="dialog_title_choose_color">Escolher uma cor</string>
+    <string name="dialog_title_select_format">Selecionar formato</string>
+    <string name="dialog_title_select_date">Selecione uma data</string>
+    <string name="select_pdf_to_open">Selecione um arquivo para abrir</string>
+    <string name="dialog_title_select_month">Selecionar mês</string>
+    <string name="title_background">Fundo</string>
+    <string name="txt_label_type">Tipo</string>
+    <string name="pdf_totals_label">Totais</string>
+    <string name="label_all_tasks">Todas as atividades</string>
+    <string name="menu_all_tasks">Todas as atividades</string>
+    <string name="info_version_label">Версия приложения: %s</string>
+    <string name="menu_view_pdf">Ver PDFs salvos</string>
+    <string name="dialog_message_keep_background">Deseja manter este fundo ou restaurar o padrão?</string>
+    <string name="format_word">Word (.txt)</string>
 </resources>

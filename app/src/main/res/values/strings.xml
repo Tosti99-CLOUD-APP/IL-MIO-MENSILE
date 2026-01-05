@@ -37,6 +37,7 @@
     <string name="hint_travel_hours">H viaggio</string>
     <string name="hint_task_description">Mansione effettuata</string>
     <string name="hint_company">Azienda</string>
+    <string name="hint_select_date">Seleziona una data</string>
     <string name="button_save">Salva</string>
     <string name="text_send_monthly">INVIARE MENSILE</string>
     <string name="toast_start_end_time_required">Inserisci orario di inizio e fine</string>
@@ -102,6 +103,7 @@
     <!-- Dialog Titles -->
     <string name="dialog_title_select_format">Seleziona il formato</string>
     <string name="dialog_title_select_month">Seleziona un mese</string>
+    <string name="dialog_title_select_date">Seleziona una data</string>
 
     <!-- Format Strings -->
     <string name="format_word">Word (.txt)</string>

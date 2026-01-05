@@ -1,16 +1,82 @@
 <resources>
-    <!-- Traduzioni parziali per il cinese (semplificato) -->
-
-    <!-- Fragment Labels -->
-    <string name="label_settings">设置</string>
-
-    <!-- SettingsFragment Layout -->
-    <string name="title_background">背景</string>
-    <string name="button_change_background_color">更改背景颜色</string>
-    <string name="button_choose_from_gallery">从图库中选择</string>
+    <string name="dialog_button_cancel">取消</string>
+    <string name="menu_preview_pdf">每月预览</string>
+    <string name="hint_company">公司</string>
+    <string name="text_company_label">公司：</string>
+    <string name="button_change_text_color">改变文本颜色</string>
+    <string name="button_change_background_color">改变背景颜色</string>
     <string name="title_fonts">字体</string>
-    <string name="button_change_text_color">更改文字颜色</string>
+    <string name="share_file">分享文件</string>
+    <string name="csv_share_title">分享CSV文件</string>
+    <string name="txt_share_title">分享TXT文件</string>
+    <string name="menu_create_pdf">创建PDF</string>
+    <string name="pdf_header_date">日期</string>
     <string name="title_text_size">文字大小</string>
+    <string name="menu_delete">删除</string>
+    <string name="csv_creation_error">创建CSV文件时出错</string>
+    <string name="txt_creation_error">创建TXT文件时出错</string>
+    <string name="pdf_preview_creation_error">创建PDF预览出错</string>
+    <string name="pdf_creation_error">创建PDF时出错</string>
+    <string name="toast_failed_to_generate_file">生成文件时出错</string>
+    <string name="toast_failed_to_save_pdf">保存PDF时出错</string>
+    <string name="toast_error_finding_pdfs">找不到PDF文件</string>
+    <string name="format_excel">Excel (.csv)</string>
+    <string name="entry_type_vacation">假期</string>
+    <string name="hint_end_time">现在结束</string>
+    <string name="hint_travel_hours">H旅行</string>
+    <string name="pdf_header_travel_hours">H旅行</string>
+    <string name="app_name">我的每月</string>
+    <string name="label_monthly_summary">我的每月</string>
+    <string name="label_settings">设置</string>
+    <string name="action_settings">设置</string>
+    <string name="menu_settings">设置</string>
+    <string name="label_info">信息</string>
+    <string name="menu_info">信息</string>
+    <string name="hint_start_time">现在开始</string>
+    <string name="toast_start_end_time_required">输入开始和结束时间</string>
+    <string name="text_send_monthly">每月发送</string>
+    <string name="hint_travel_kms">旅行公里数</string>
+    <string name="pdf_header_travel_kms">旅行公里数</string>
+    <string name="entry_type_work">工作</string>
     <string name="language">语言</string>
-
+    <string name="pdf_header_task">职位</string>
+    <string name="hint_task_description">已完成的任务</string>
+    <string name="pdf_month_label">月：%s</string>
+    <string name="text_minutes_short">分</string>
+    <string name="txt_label_minutes">分钟</string>
+    <string name="label_edit_task">修改活动</string>
+    <string name="toast_no_pdf_app">找不到打开此文件的应用程序。</string>
+    <string name="pdf_no_data_message">选定月份无数据</string>
+    <string name="no_saved_pdfs_found">未找到已保存的文件。</string>
+    <string name="dialog_title_new_background">新背景</string>
+    <string name="txt_label_hours">小时</string>
+    <string name="pdf_header_vacation_hours">假期小时</string>
+    <string name="pdf_header_work_hours">工作小时</string>
+    <string name="pdf_header_leave_hours">请假小时</string>
+    <string name="pdf_header_break">休息</string>
+    <string name="hint_break_time">休息（分钟）</string>
+    <string name="format_pdf">PDF</string>
+    <string name="pdf_creation_success">PDFが正常に作成されました！</string>
+    <string name="toast_pdf_saved_to_downloads">PDF已保存到下载</string>
+    <string name="entry_type_leave">权限</string>
+    <string name="label_daily_report">每日报告</string>
+    <string name="pdf_summary_title">工作时间总结</string>
+    <string name="hint_select_date">选择一个日期</string>
+    <string name="button_save">保存</string>
+    <string name="button_save_changes">保存更改</string>
+    <string name="button_choose_from_gallery">从画廊选择</string>
+    <string name="dialog_title_choose_color">选择一种颜色</string>
+    <string name="dialog_title_select_format">选择格式</string>
+    <string name="dialog_title_select_date">选择一个日期</string>
+    <string name="select_pdf_to_open">选择要打开的文件</string>
+    <string name="dialog_title_select_month">选择月份</string>
+    <string name="title_background">背景</string>
+    <string name="txt_label_type">类型</string>
+    <string name="pdf_totals_label">总计</string>
+    <string name="label_all_tasks">所有活动</string>
+    <string name="menu_all_tasks">所有活动</string>
+    <string name="info_version_label">应用程序版本：%s</string>
+    <string name="menu_view_pdf">查看已保存的PDF</string>
+    <string name="dialog_message_keep_background">你想保留这个背景还是恢复默认背景？</string>
+    <string name="format_word">Word (.txt)</string>
 </resources>

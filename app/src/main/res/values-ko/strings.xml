@@ -1,16 +1,82 @@
 <resources>
-    <!-- Traduzioni parziali per il coreano -->
-
-    <!-- Fragment Labels -->
-    <string name="label_settings">설정</string>
-
-    <!-- SettingsFragment Layout -->
-    <string name="title_background">배경</string>
-    <string name="button_change_background_color">배경색 변경</string>
-    <string name="button_choose_from_gallery">갤러리에서 선택</string>
-    <string name="title_fonts">글꼴</string>
+    <string name="dialog_button_cancel">취소</string>
+    <string name="menu_preview_pdf">월별 미리보기</string>
+    <string name="hint_company">회사</string>
+    <string name="text_company_label">회사:</string>
     <string name="button_change_text_color">텍스트 색상 변경</string>
+    <string name="button_change_background_color">배경색 변경</string>
+    <string name="title_fonts">글꼴</string>
+    <string name="share_file">파일 공유</string>
+    <string name="csv_share_title">CSV 파일 공유</string>
+    <string name="txt_share_title">TXT 파일 공유</string>
+    <string name="menu_create_pdf">PDF 만들기</string>
+    <string name="pdf_header_date">날짜</string>
     <string name="title_text_size">텍스트 크기</string>
+    <string name="menu_delete">삭제</string>
+    <string name="csv_creation_error">CSV 파일 생성 오류</string>
+    <string name="txt_creation_error">TXT 파일 생성 오류</string>
+    <string name="pdf_preview_creation_error">PDF 미리보기 생성 오류</string>
+    <string name="pdf_creation_error">PDF 생성 오류</string>
+    <string name="toast_failed_to_generate_file">파일 생성 오류</string>
+    <string name="toast_failed_to_save_pdf">PDF 저장 오류</string>
+    <string name="toast_error_finding_pdfs">PDF 파일 찾기 오류</string>
+    <string name="format_excel">Excel (.csv)</string>
+    <string name="entry_type_vacation">휴가</string>
+    <string name="hint_end_time">지금 끝내기</string>
+    <string name="hint_travel_hours">H 여행</string>
+    <string name="pdf_header_travel_hours">H 여행</string>
+    <string name="app_name">나의 월간</string>
+    <string name="label_monthly_summary">나의 월간</string>
+    <string name="label_settings">설정</string>
+    <string name="action_settings">설정</string>
+    <string name="menu_settings">설정</string>
+    <string name="label_info">정보</string>
+    <string name="menu_info">정보</string>
+    <string name="hint_start_time">지금 시작</string>
+    <string name="toast_start_end_time_required">시작 및 종료 시간을 입력하세요</string>
+    <string name="text_send_monthly">매월 보내기</string>
+    <string name="hint_travel_kms">출장 거리</string>
+    <string name="pdf_header_travel_kms">출장 거리</string>
+    <string name="entry_type_work">작업</string>
     <string name="language">언어</string>
-
+    <string name="pdf_header_task">직무</string>
+    <string name="hint_task_description">완료된 작업</string>
+    <string name="pdf_month_label">달: %s</string>
+    <string name="text_minutes_short">분</string>
+    <string name="txt_label_minutes">분</string>
+    <string name="label_edit_task">활동 수정</string>
+    <string name="toast_no_pdf_app">이 파일을 열 수 있는 앱이 없습니다.</string>
+    <string name="pdf_no_data_message">선택한 달에 데이터 없음</string>
+    <string name="no_saved_pdfs_found">저장된 파일을 찾을 수 없습니다.</string>
+    <string name="dialog_title_new_background">새 배경</string>
+    <string name="txt_label_hours">시간</string>
+    <string name="pdf_header_vacation_hours">휴가 시간</string>
+    <string name="pdf_header_work_hours">근무 시간</string>
+    <string name="pdf_header_leave_hours">휴가 시간</string>
+    <string name="pdf_header_break">휴식</string>
+    <string name="hint_break_time">휴식(분)</string>
+    <string name="format_pdf">PDF</string>
+    <string name="pdf_creation_success">PDF가 성공적으로 생성되었습니다!</string>
+    <string name="toast_pdf_saved_to_downloads">PDF 다운로드에 저장됨</string>
+    <string name="entry_type_leave">권한</string>
+    <string name="label_daily_report">일일 보고서</string>
+    <string name="pdf_summary_title">근무 시간 요약</string>
+    <string name="hint_select_date">날짜를 선택하세요</string>
+    <string name="button_save">저장</string>
+    <string name="button_save_changes">변경 사항 저장</string>
+    <string name="button_choose_from_gallery">갤러리에서 선택</string>
+    <string name="dialog_title_choose_color">색상 선택</string>
+    <string name="dialog_title_select_format">형식 선택</string>
+    <string name="dialog_title_select_date">날짜를 선택하세요</string>
+    <string name="select_pdf_to_open">열 파일 선택</string>
+    <string name="dialog_title_select_month">월 선택</string>
+    <string name="title_background">배경</string>
+    <string name="txt_label_type">유형</string>
+    <string name="pdf_totals_label">합계</string>
+    <string name="label_all_tasks">모든 활동</string>
+    <string name="menu_all_tasks">모든 활동</string>
+    <string name="info_version_label">앱 버전: %s</string>
+    <string name="menu_view_pdf">저장된 PDF 보기</string>
+    <string name="dialog_message_keep_background">이 배경을 유지하시겠습니까 아니면 기본값으로 복원하시겠습니까?</string>
+    <string name="format_word">Word (.txt)</string>
 </resources>
